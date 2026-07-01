@@ -162,6 +162,12 @@ If Claude can complete these, the connection is working.
 - **Daily notes as a running log:** ask Claude to append a summary of each
   session to today's daily note (`templates/daily-note.md`) so you have a
   chronological record.
+- **Weekly review:** have Claude sweep `00-Inbox` and draft a
+  `templates/weekly-review.md` note — what got filed, what's stalled, what's
+  next — so nothing sits unsorted for long.
+- **Log decisions, not just tasks:** for anything you and Claude debate and
+  settle (architecture, tooling, process), capture it with
+  `templates/decision-log.md` so the reasoning survives, not just the outcome.
 - **Link, don't duplicate:** encourage Claude to use `[[wikilinks]]` to
   connect new notes to existing ones instead of restating context.
 - **Tag consistently:** agree on a small tag vocabulary (e.g. `#project`,
@@ -189,7 +195,9 @@ If Claude can complete these, the connection is working.
 │   ├── daily-note.md
 │   ├── project-note.md
 │   ├── meeting-note.md
-│   └── claude-chat-log.md
+│   ├── claude-chat-log.md
+│   ├── weekly-review.md
+│   └── decision-log.md
 ├── config/claude_desktop_config.example.json
 └── docs/
     ├── video-script.md                # narration script / storyboard
