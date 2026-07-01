@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
-# Full pipeline: HTML slides -> PNG screenshots -> offline TTS narration ->
-# final MP4. Everything runs locally (headless Chromium + espeak-ng + ffmpeg),
-# no cloud services involved.
+# Full pipeline: HTML slides -> PNG screenshots -> TTS narration -> final MP4.
+#
+# Usage: ./build.sh [--skip-audio]
+#   --skip-audio   Reuse whatever's already in audio/ instead of regenerating
+#                   it (e.g. after running voice-clone/clone_voice.py).
 set -euo pipefail
+
+SKIP_AUDIO=0
+for arg in "$@"; do
+  case "$arg" in
+    --skip-audio) SKIP_AUDIO=1 ;;
+    *) echo "Unknown argument: $arg" >&2; exit 1 ;;
+  esac
+done
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SLIDES_DIR="$DIR/slides"
@@ -13,7 +23,11 @@ PAD_SECONDS=0.6
 
 node "$DIR/render_slides.js"
 "$DIR/render_pngs.sh"
-"$DIR/gen_audio.sh"
+if [ "$SKIP_AUDIO" -eq 1 ]; then
+  echo "Skipping audio generation, reusing existing files in $AUDIO_DIR"
+else
+  "$DIR/gen_audio.sh"
+fi
 
 rm -rf "$SEGMENTS_DIR"
 mkdir -p "$SEGMENTS_DIR"

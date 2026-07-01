@@ -1,0 +1,5 @@
+# Local voice cloning (XTTS-v2). Run on a machine with internet access -
+# see README.md in this folder for why this can't run in a network-sandboxed
+# environment.
+coqui-tts>=0.24
+torch>=2.1

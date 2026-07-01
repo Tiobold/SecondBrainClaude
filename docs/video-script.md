@@ -119,6 +119,15 @@ the daily note · Link related notes instead of repeating context
 docs/video/build.sh
 ```
 
-Regenerates slide PNGs (headless Chromium), narration WAVs (`espeak-ng`,
-fully offline — no cloud TTS is used), and re-muxes the final MP4 with
-`ffmpeg`. See that script for the exact pipeline.
+Regenerates slide PNGs (headless Chromium), narration WAVs, and re-muxes the
+final MP4 with `ffmpeg`. Narration defaults to Festival's offline
+`cmu_us_slt_arctic_hts` voice (`gen_audio.sh`, statistical parametric —
+noticeably smoother than `espeak-ng`'s formant synthesis, which is still
+available via `gen_audio.sh espeak`). Everything here runs locally; no cloud
+TTS is used.
+
+**Want it in your own voice?** See `docs/video/voice-clone/README.md` — a
+Coqui XTTS-v2 script that clones narration from a short recording of you.
+It has to run on a machine with normal internet access (not this repo's
+sandboxed build environment), then feed the result back in with
+`docs/video/build.sh --skip-audio`.

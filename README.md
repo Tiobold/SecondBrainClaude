@@ -7,6 +7,7 @@ carry across every conversation instead of living only in chat history.
 
 **Video walkthrough:** [`docs/video/obsidian-second-brain.mp4`](docs/video/obsidian-second-brain.mp4)
 **Narration script / storyboard:** [`docs/video-script.md`](docs/video-script.md)
+**Want it narrated in your own voice?** [`docs/video/voice-clone/README.md`](docs/video/voice-clone/README.md)
 
 ---
 
@@ -192,5 +193,8 @@ If Claude can complete these, the connection is working.
 ├── config/claude_desktop_config.example.json
 └── docs/
     ├── video-script.md                # narration script / storyboard
-    └── video/obsidian-second-brain.mp4
+    └── video/
+        ├── obsidian-second-brain.mp4  # the video
+        ├── build.sh                   # rebuild pipeline (slides + TTS + ffmpeg)
+        └── voice-clone/               # optional: narrate in your own voice
 ```

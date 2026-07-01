@@ -7,3 +7,9 @@ claude_desktop_config.json
 # Video build intermediates (kept out of git; final mp4 is committed separately)
 docs/video/slides/*.png
 docs/video/audio/*.wav
+docs/video/.segments/
+
+# Voice-clone reference recordings / local venv - never commit your own voice
+docs/video/voice-clone/*.wav
+docs/video/voice-clone/*.mp3
+docs/video/voice-clone/.venv/
