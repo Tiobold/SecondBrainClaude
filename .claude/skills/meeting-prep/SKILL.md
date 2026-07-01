@@ -27,7 +27,9 @@ if both are, ask which one only if it isn't obvious from context.
 
 Search the vault for anything relevant:
 
-- Notes whose title or `[[wikilinks]]` match attendee names
+- `06-People/` notes for each attendee (match on name/alias — see the
+  `person-notes` skill's frontmatter contract) — their Summary and recent
+  Interaction timeline rows are the fastest way to remember who someone is
 - `01-Projects/` notes matching the meeting title or description keywords
 - Past `templates/meeting-note.md` notes with overlapping attendees or a
   similar title (previous meetings in the same series)
@@ -50,6 +52,13 @@ Create (or update, if one already exists for this meeting) a note based on
   questions, blockers, overdue items) — don't invent an agenda
 
 Link the briefing from today's daily note.
+
+## Sync people
+
+After writing the briefing, invoke the `person-notes` skill's vault-sync
+step (mode 1) for the attendees on this meeting, so their person notes
+pick up "briefed for [meeting]" without a separate manual step. Skip this
+only if `06-People/` doesn't exist in this vault.
 
 ## Guardrails
 

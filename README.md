@@ -69,6 +69,7 @@ SecondBrain/
 ├── 03-Resources/             # Reference material, research, Claude-generated summaries
 ├── 04-Archive/                # Completed / inactive
 ├── 05-Meeting-Transcripts/    # Teams transcripts (see teams-meeting-notes skill)
+├── 06-People/                 # One note per person (see person-notes skill)
 ├── Daily/                     # Daily notes (YYYY-MM-DD.md)
 └── Templates/                 # Copied from this repo's templates/ folder
 ```
@@ -169,6 +170,10 @@ If Claude can complete these, the connection is working.
 - **Log decisions, not just tasks:** for anything you and Claude debate and
   settle (architecture, tooling, process), capture it with
   `templates/decision-log.md` so the reasoning survives, not just the outcome.
+- **Link people, don't retype context:** mention people as `[[Full Name]]`
+  so notes resolve to their `06-People/` profile — meeting/transcript
+  skills use that link (plus the person note's `aliases`) to keep each
+  person's interaction timeline current automatically.
 - **Link, don't duplicate:** encourage Claude to use `[[wikilinks]]` to
   connect new notes to existing ones instead of restating context.
 - **Tag consistently:** agree on a small tag vocabulary (e.g. `#project`,
@@ -190,13 +195,23 @@ connected and authorized, and tells you what's missing instead of guessing.
 | `weekly-slack-update` | Draft a concise weekly summary from daily notes, project activity, and decisions, and post it to a Slack channel — draft-then-approve, never auto-sent. | Slack MCP server |
 | `meeting-prep` | Before a meeting, pull related project/people/decision notes from the vault into a short briefing linked from today's daily note. | Google Calendar or Outlook/Microsoft 365 MCP server |
 | `teams-meeting-notes` | Find calendar events with Teams links, retrieve the transcript, archive it in `05-Meeting-Transcripts/`, and write a summary + action items. Proposes (never silently applies) related updates to project/decision-log notes. | Microsoft 365 MCP server (Outlook calendar + Teams transcripts) |
+| `person-notes` | Maintain one note per person in `06-People/`: profile + interaction timeline, built from vault mentions and optionally enriched from Slack/Telegram/WhatsApp/Email. | None for vault-only sync; chat/email MCP servers for the optional research mode |
 
 `md-confluence`/`md-jira` keep a link back via frontmatter
 (`confluence-page-id`, `jira-key`) so re-running updates the same
 page/ticket instead of duplicating it — see each `SKILL.md` for the exact
-field contract and formatting mapping. `teams-meeting-notes` treats
-existing project/decision notes as **append-only**: it proposes additions
-and shows them before writing, it never rewrites or removes what's there.
+field contract and formatting mapping. `teams-meeting-notes` and
+`person-notes` treat existing notes as **append-only**: they propose
+additions and show them before writing, never rewriting or removing what's
+there.
+
+**No skill runs on a background timer or file-watcher** — Claude Code
+skills only execute when invoked. `06-People/` notes stay current because
+`meeting-prep` and `teams-meeting-notes` call `person-notes`'s sync step
+for the people they touch as their last step, not because anything is
+watching the vault. Run `person-notes` directly (its whole-vault resync
+mode) to catch anything created before this was wired up, or by a note
+added outside those two skills.
 
 ---
 
@@ -222,14 +237,16 @@ and shows them before writing, it never rewrites or removes what's there.
 │   ├── meeting-note.md
 │   ├── claude-chat-log.md
 │   ├── weekly-review.md
-│   └── decision-log.md
+│   ├── decision-log.md
+│   └── person.md
 ├── config/claude_desktop_config.example.json
 ├── .claude/skills/                    # Claude Code skills for this vault
 │   ├── md-confluence/SKILL.md         # push/pull notes <-> Confluence pages
 │   ├── md-jira/SKILL.md               # push/pull notes <-> Jira issues
 │   ├── weekly-slack-update/SKILL.md   # draft + send a weekly team update
 │   ├── meeting-prep/SKILL.md          # pre-meeting briefing from the vault
-│   └── teams-meeting-notes/SKILL.md   # Teams transcripts -> summary + actions
+│   ├── teams-meeting-notes/SKILL.md   # Teams transcripts -> summary + actions
+│   └── person-notes/SKILL.md          # maintain 06-People/ profiles
 └── docs/
     ├── video-script.md                # narration script / storyboard
     └── video/

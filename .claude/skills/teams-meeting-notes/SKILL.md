@@ -78,6 +78,13 @@ notes.
 - If nothing clearly matches, don't force a link. Let the transcript note
   stand on its own rather than bolting it onto an unrelated project.
 
+## Sync people
+
+After writing the summary, invoke the `person-notes` skill's vault-sync
+step (mode 1) for the `attendees` on this transcript, so each person's
+`06-People/` note picks up this meeting as an interaction-timeline row.
+Skip this only if `06-People/` doesn't exist in this vault.
+
 ## Guardrails
 
 - Transcripts can contain sensitive discussion — don't post any part of one
