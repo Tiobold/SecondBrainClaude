@@ -220,11 +220,16 @@ If Claude can complete these, the connection is working.
 - **Link people, don't retype context:** mention people as `[[Full Name]]`
   so notes resolve to their `06-People/` profile — meeting/transcript
   skills use that link (plus the person note's `aliases`) to keep each
-  person's interaction timeline current automatically.
-- **Link, don't duplicate:** encourage Claude to use `[[wikilinks]]` to
-  connect new notes to existing ones instead of restating context.
+  person's interaction timeline current automatically. `templates/CLAUDE.md.example`
+  already tells Claude to do this by default — this isn't just a habit to
+  ask for.
+- **Link, don't duplicate:** `[[wikilinks]]` to connect new notes to
+  existing ones instead of restating context — also baked into the default
+  `CLAUDE.md` instructions, not something you need to remind Claude to do.
 - **Tag consistently:** agree on a small tag vocabulary (e.g. `#project`,
-  `#decision`, `#reference`) so both you and Claude can query by tag.
+  `#decision`, `#reference`). The default `CLAUDE.md` tells Claude to reuse
+  whatever's already in use rather than invent new tags — worth agreeing on
+  the vocabulary early since Claude will follow it, not set it.
 
 ---
 

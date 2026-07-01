@@ -10,3 +10,8 @@ Log) before responding. Don't narrate that you did.
 
 Use the `claude-context` skill to route any updates during or at the end
 of this session — decisions, priority shifts, new/resolved open questions.
+
+When writing a note that mentions a person or project with an existing
+note, link it as `[[Full Name]]` / `[[Project Name]]` instead of restating
+context. Tag new notes with vocabulary already in use in the vault — check
+a similar existing note if unsure — rather than inventing new tags.
