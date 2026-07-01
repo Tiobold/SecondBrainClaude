@@ -40,6 +40,32 @@ Both are covered below.
 
 ---
 
+## Quick start (automated)
+
+```bash
+git clone https://github.com/Tiobold/ClaudeTio.git
+cd ClaudeTio
+./scripts/setup-all.sh ~/ObsidianVaults/SecondBrain
+```
+
+This creates the vault, downloads and enables the Local REST API plugin,
+and wires both Claude Desktop and Claude Code — everything sections 1-6
+below do by hand, run for you. It ends with a short checklist of the two
+or three things nothing can script (Obsidian has to actually run once to
+generate its own API key). Flags: `--desktop` / `--code` (configure just
+one client instead of both), `--skip-plugin`, `--api-key KEY` — see the
+comment header in `scripts/setup-all.sh` for details, or run the
+individual scripts it calls — `scripts/install-obsidian-plugin.sh`,
+`scripts/configure-claude-desktop.sh`, `scripts/configure-claude-code.sh`
+— on their own.
+
+The sections below explain what each step actually does and how to do it
+by hand if you'd rather not run scripts that touch your Claude config —
+read on if you want the manual path, or to understand/troubleshoot what
+the automated one just did.
+
+---
+
 ## 1. Prerequisites
 
 - [Obsidian](https://obsidian.md) installed, with a vault created (or use
@@ -93,7 +119,8 @@ writes files directly. Just tell it where the vault lives, e.g.:
 > `Templates/claude-chat-log.md`."
 
 **Claude Desktop:** add the official filesystem MCP server, scoped to your
-vault path only:
+vault path only (`scripts/configure-claude-desktop.sh` writes this — and
+the Option B entry below — into your real config for you):
 
 ```jsonc
 // claude_desktop_config.json — see config/claude_desktop_config.example.json
@@ -124,10 +151,17 @@ management, and search (text, JSONLogic, and BM25 via the optional
 Omnisearch plugin).
 
 1. In Obsidian: **Settings → Community plugins → Browse**, search for
-   **"Local REST API"**, install and enable it (v4.0.0 or later).
+   **"Local REST API"**, install and enable it (v4.0.0 or later). Or run
+   `scripts/install-obsidian-plugin.sh /path/to/vault` to download and
+   stage it for you — see that script's header for exactly what it
+   automates and what it can't (Obsidian has to run once for the plugin to
+   generate its API key).
 2. Open its settings, enable **HTTPS**, and copy the generated **API key**.
 3. Add the MCP server to your Claude config (see
-   `config/claude_desktop_config.example.json`):
+   `config/claude_desktop_config.example.json`, or let
+   `scripts/configure-claude-desktop.sh` / `scripts/configure-claude-code.sh`
+   write it for you — both back up your existing config first and only
+   touch the entries they manage):
 
    ```jsonc
    {
@@ -305,7 +339,13 @@ read actually gets triggered.
 
 ```
 ├── README.md                          # this guide
-├── scripts/setup-vault.sh             # creates the PARA vault structure + templates
+├── scripts/
+│   ├── setup-all.sh                   # orchestrator: runs everything below
+│   ├── setup-vault.sh                 # creates the PARA vault structure + templates
+│   ├── install-obsidian-plugin.sh     # downloads + enables the Local REST API plugin
+│   ├── configure-claude-desktop.sh    # merges MCP entries into your real Claude Desktop config
+│   ├── configure-claude-code.sh       # writes the vault's .mcp.json for Claude Code
+│   └── lib/merge-mcp-config.py        # shared safe JSON-merge used by both configure-* scripts
 ├── templates/                         # Obsidian note templates
 │   ├── daily-note.md
 │   ├── project-note.md
