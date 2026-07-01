@@ -63,13 +63,14 @@ This creates:
 
 ```
 SecondBrain/
-├── 00-Inbox/       # Quick capture — unsorted notes, Claude drops new notes here by default
-├── 01-Projects/    # Active, time-bound efforts
-├── 02-Areas/       # Ongoing responsibilities (no end date)
-├── 03-Resources/   # Reference material, research, Claude-generated summaries
-├── 04-Archive/     # Completed / inactive
-├── Daily/          # Daily notes (YYYY-MM-DD.md)
-└── Templates/      # Copied from this repo's templates/ folder
+├── 00-Inbox/                 # Quick capture — unsorted notes, Claude drops new notes here by default
+├── 01-Projects/              # Active, time-bound efforts
+├── 02-Areas/                 # Ongoing responsibilities (no end date)
+├── 03-Resources/             # Reference material, research, Claude-generated summaries
+├── 04-Archive/                # Completed / inactive
+├── 05-Meeting-Transcripts/    # Teams transcripts (see teams-meeting-notes skill)
+├── Daily/                     # Daily notes (YYYY-MM-DD.md)
+└── Templates/                 # Copied from this repo's templates/ folder
 ```
 
 Open the resulting folder in Obsidian as a vault (`Open folder as vault`).
@@ -175,26 +176,27 @@ If Claude can complete these, the connection is working.
 
 ---
 
-## 7. Claude Code skills: push/pull notes to Confluence & Jira
+## 7. Claude Code skills
 
-This repo ships two [Claude Code skills](https://code.claude.com/docs) under
-`.claude/skills/` that travel with the vault repo:
+This repo ships [Claude Code skills](https://code.claude.com/docs) under
+`.claude/skills/` that travel with the vault repo. None of them talk to
+external services directly — each one drives whatever MCP tools you've
+connected and authorized, and tells you what's missing instead of guessing.
 
-| Skill | What it does |
-|---|---|
-| `md-confluence` | Push a note to Confluence as a page (or update the linked page), or pull a Confluence page into the vault as a note. |
-| `md-jira` | Turn a note (or a single task in one) into a Jira ticket, or pull a Jira issue into the vault as a note. |
+| Skill | What it does | Requires |
+|---|---|---|
+| `md-confluence` | Push a note to Confluence as a page (or update the linked page), or pull a Confluence page into the vault as a note. | Atlassian MCP server (Confluence) |
+| `md-jira` | Turn a note (or a single task) into a Jira ticket, or pull a Jira issue into the vault as a note. | Atlassian MCP server (Jira) |
+| `weekly-slack-update` | Draft a concise weekly summary from daily notes, project activity, and decisions, and post it to a Slack channel — draft-then-approve, never auto-sent. | Slack MCP server |
+| `meeting-prep` | Before a meeting, pull related project/people/decision notes from the vault into a short briefing linked from today's daily note. | Google Calendar or Outlook/Microsoft 365 MCP server |
+| `teams-meeting-notes` | Find calendar events with Teams links, retrieve the transcript, archive it in `05-Meeting-Transcripts/`, and write a summary + action items. Proposes (never silently applies) related updates to project/decision-log notes. | Microsoft 365 MCP server (Outlook calendar + Teams transcripts) |
 
-Both directions keep a link back via frontmatter (`confluence-page-id`,
-`jira-key`, etc.) so re-running the skill updates the same page/ticket
-instead of creating duplicates — see each `SKILL.md` for the exact field
-contract and the markdown ⇄ Confluence/Jira formatting mapping.
-
-**Requires an Atlassian MCP server** (e.g. the official Atlassian Remote MCP
-server) connected and authorized in your Claude client — these skills don't
-talk to Confluence/Jira directly, they drive whatever Atlassian MCP tools
-you've connected. If none are available, the skill will tell you to connect
-one instead of guessing.
+`md-confluence`/`md-jira` keep a link back via frontmatter
+(`confluence-page-id`, `jira-key`) so re-running updates the same
+page/ticket instead of duplicating it — see each `SKILL.md` for the exact
+field contract and formatting mapping. `teams-meeting-notes` treats
+existing project/decision notes as **append-only**: it proposes additions
+and shows them before writing, it never rewrites or removes what's there.
 
 ---
 
@@ -224,7 +226,10 @@ one instead of guessing.
 ├── config/claude_desktop_config.example.json
 ├── .claude/skills/                    # Claude Code skills for this vault
 │   ├── md-confluence/SKILL.md         # push/pull notes <-> Confluence pages
-│   └── md-jira/SKILL.md               # push/pull notes <-> Jira issues
+│   ├── md-jira/SKILL.md               # push/pull notes <-> Jira issues
+│   ├── weekly-slack-update/SKILL.md   # draft + send a weekly team update
+│   ├── meeting-prep/SKILL.md          # pre-meeting briefing from the vault
+│   └── teams-meeting-notes/SKILL.md   # Teams transcripts -> summary + actions
 └── docs/
     ├── video-script.md                # narration script / storyboard
     └── video/

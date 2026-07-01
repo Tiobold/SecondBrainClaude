@@ -17,6 +17,7 @@ FOLDERS=(
   "02-Areas"
   "03-Resources"
   "04-Archive"
+  "05-Meeting-Transcripts"
   "Daily"
   "Templates"
 )
