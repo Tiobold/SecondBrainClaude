@@ -81,7 +81,7 @@ function renderScene(scene) {
         </div>`;
       return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${BASE_CSS}</style></head><body>
         <div class="frame" style="justify-content:center;">
-          <div class="badge" style="align-self:center;"><span class="dot"></span>ClaudeTio</div>
+          <div class="badge" style="align-self:center;"><span class="dot"></span>SecondBrainClaude</div>
           ${body}
         </div>
       </body></html>`;
@@ -114,7 +114,7 @@ function renderScene(scene) {
   }
 
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${BASE_CSS}</style></head><body>
-    ${frameOpen(scene, "ClaudeTio")}
+    ${frameOpen(scene, "SecondBrainClaude")}
     ${body}
     <div class="footer">Obsidian as a Second Brain for Claude — docs/video-script.md</div>
   </body></html>`;

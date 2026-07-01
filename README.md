@@ -1,4 +1,4 @@
-# ClaudeTio — Obsidian as a Second Brain for Claude
+# SecondBrainClaude — Obsidian as a Second Brain for Claude
 
 A practical guide (with working config, scripts, and templates) for turning an
 [Obsidian](https://obsidian.md) vault into a persistent "second brain" that
@@ -43,8 +43,8 @@ Both are covered below.
 ## Quick start (automated)
 
 ```bash
-git clone https://github.com/Tiobold/ClaudeTio.git
-cd ClaudeTio
+git clone https://github.com/Tiobold/SecondBrainClaude.git
+cd SecondBrainClaude
 ./scripts/setup-all.sh ~/ObsidianVaults/SecondBrain
 ```
 

@@ -3,7 +3,7 @@
     "id": "scene01",
     "kind": "title",
     "title": "Obsidian as a Second Brain for Claude",
-    "subtitle": "A ClaudeTio guide",
+    "subtitle": "A SecondBrainClaude guide",
     "narration": "Welcome. This is a quick guide to turning Obsidian into a second brain for Claude, so your notes and project context survive across every conversation."
   },
   {
@@ -96,8 +96,8 @@
     "id": "scene10",
     "kind": "outro",
     "title": "Get started",
-    "subtitle": "github.com/Tiobold/ClaudeTio",
+    "subtitle": "github.com/Tiobold/SecondBrainClaude",
     "items": ["README.md", "scripts/setup-vault.sh", "templates/", "config/claude_desktop_config.example.json"],
-    "narration": "Everything shown here, the setup script, the templates, and the example config, is in the ClaudeTio repo. Check the README to get started."
+    "narration": "Everything shown here, the setup script, the templates, and the example config, is in the Second Brain Claude repo. Check the README to get started."
   }
 ]
