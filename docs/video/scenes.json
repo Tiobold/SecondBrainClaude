@@ -64,10 +64,10 @@
     "items": [
       "Install the \"Local REST API\" community plugin",
       "Copy the generated API key",
-      "Add mcp-obsidian to your Claude config",
+      "Add obsidian-mcp-server to your Claude config",
       "Restart Claude"
     ],
-    "narration": "For richer search, install the Local REST API community plugin inside Obsidian, copy its API key, and add the M C P dash obsidian server to your Claude config with that key."
+    "narration": "For richer search, install the Local REST API community plugin inside Obsidian, copy its API key, and add obsidian dash M C P dash server to your Claude config with that key."
   },
   {
     "id": "scene08",

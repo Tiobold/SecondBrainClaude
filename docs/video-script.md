@@ -74,12 +74,12 @@ MCP server (structured search)
 
 ### Scene 7 — Option B: Local REST API + MCP
 **Slide:** steps — Install "Local REST API" plugin · Copy the API key · Add
-`mcp-obsidian` to your config · Restart Claude
+`obsidian-mcp-server` to your config · Restart Claude
 
 **Narration:**
 > For richer search, install the Local REST API community plugin inside
-> Obsidian, copy its API key, and add the M C P dash obsidian server to your
-> Claude config with that key.
+> Obsidian, copy its API key, and add obsidian dash M C P dash server to
+> your Claude config with that key.
 
 ---
 
