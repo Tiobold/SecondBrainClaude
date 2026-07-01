@@ -63,6 +63,7 @@ This creates:
 
 ```
 SecondBrain/
+├── CLAUDE.md                    # Claude Code session-context trigger (see section 5)
 ├── 00-Inbox/                    # Quick capture — unsorted notes, Claude drops new notes here by default
 ├── 01-Projects/                 # Active, time-bound efforts
 ├── 02-Areas/                    # Ongoing responsibilities (no end date)
@@ -172,11 +173,10 @@ client:
 
 **Claude Code:** Claude Code auto-loads a `CLAUDE.md` file from the working
 directory at the start of every session, so the recommended wiring is a
-one-line pointer in your vault's `CLAUDE.md`:
-
-> Before responding, silently read `Meta/Claude Context/*.md` (About,
-> Current Focus, Open Threads, Decisions Log). Use the `claude-context`
-> skill to route any updates during or at the end of this session.
+one-line pointer in your vault's `CLAUDE.md`. `scripts/setup-vault.sh`
+generates this for you from `templates/CLAUDE.md.example` (substituting the
+`Meta/Claude Context` path if you've customized it) — nothing further to
+compose by hand.
 
 **Claude Desktop (or any client without an auto-loaded memory file):** add
 the same instruction manually, as a custom system prompt or project
@@ -289,11 +289,12 @@ read actually gets triggered.
 │   ├── weekly-review.md
 │   ├── decision-log.md
 │   ├── person.md
-│   └── claude-context/                # starter files for Meta/Claude Context/
-│       ├── about.md
-│       ├── current-focus.md
-│       ├── open-threads.md
-│       └── decisions-log.md
+│   ├── claude-context/                # starter files for Meta/Claude Context/
+│   │   ├── about.md
+│   │   ├── current-focus.md
+│   │   ├── open-threads.md
+│   │   └── decisions-log.md
+│   └── CLAUDE.md.example              # copied to the vault root as CLAUDE.md
 ├── config/claude_desktop_config.example.json
 ├── .claude/skills/                    # Claude Code skills for this vault
 │   ├── md-confluence/SKILL.md         # push/pull notes <-> Confluence pages

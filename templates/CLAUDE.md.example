@@ -1,0 +1,12 @@
+<!-- Copy to your vault root as CLAUDE.md so Claude Code auto-loads it
+     every session. scripts/setup-vault.sh does this for you, substituting
+     the Meta/Claude Context path if it's been customized. Keep this file
+     short — it's a trigger, not a duplicate of the claude-context skill's
+     logic. Don't inline the full routing rules here; that's what
+     .claude/skills/claude-context/SKILL.md is for. -->
+
+Read `{{CONTEXT_DIR}}/*.md` (About, Current Focus, Open Threads, Decisions
+Log) before responding. Don't narrate that you did.
+
+Use the `claude-context` skill to route any updates during or at the end
+of this session — decisions, priority shifts, new/resolved open questions.

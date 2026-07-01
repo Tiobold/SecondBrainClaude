@@ -64,6 +64,22 @@ if [ -d "$CONTEXT_TEMPLATES_DIR" ]; then
   done
 fi
 
+# Wire up the session-context trigger for Claude Code, which auto-loads
+# CLAUDE.md from the working directory at the start of every session (see
+# README section 5). Not needed for Claude Desktop - that wiring is manual,
+# see the README.
+CLAUDE_MD_TEMPLATE="$TEMPLATES_DIR/CLAUDE.md.example"
+CLAUDE_MD_DEST="$VAULT_PATH/CLAUDE.md"
+
+if [ -f "$CLAUDE_MD_TEMPLATE" ]; then
+  if [ -f "$CLAUDE_MD_DEST" ]; then
+    echo "skip (exists) $CLAUDE_MD_DEST"
+  else
+    sed "s#{{CONTEXT_DIR}}#$CONTEXT_DIR_NAME#g" "$CLAUDE_MD_TEMPLATE" > "$CLAUDE_MD_DEST"
+    echo "created $CLAUDE_MD_DEST"
+  fi
+fi
+
 echo ""
 echo "Vault ready at: $VAULT_PATH"
 echo "Open it in Obsidian via: Open folder as vault -> select '$VAULT_PATH'"
