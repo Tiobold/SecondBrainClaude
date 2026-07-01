@@ -9,7 +9,7 @@ length of its narration.
 ---
 
 ### Scene 1 — Title
-**Slide:** "Obsidian as a Second Brain for Claude" / "A ClaudeTio guide"
+**Slide:** "Obsidian as a Second Brain for Claude" / "A SecondBrainClaude guide"
 
 **Narration:**
 > Welcome. This is a quick guide to turning Obsidian into a second brain for
@@ -105,11 +105,11 @@ the daily note · Link related notes instead of repeating context
 ---
 
 ### Scene 10 — Get started
-**Slide:** "ClaudeTio" repo · README.md · scripts/ · templates/ · config/
+**Slide:** "SecondBrainClaude" repo · README.md · scripts/ · templates/ · config/
 
 **Narration:**
 > Everything shown here, the setup script, the templates, and the example
-> config, is in the ClaudeTio repo. Check the README to get started.
+> config, is in the Second Brain Claude repo. Check the README to get started.
 
 ---
 
