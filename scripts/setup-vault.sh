@@ -10,6 +10,8 @@ set -euo pipefail
 VAULT_PATH="${1:?Usage: setup-vault.sh /path/to/vault}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEMPLATES_DIR="$SCRIPT_DIR/../templates"
+CONTEXT_TEMPLATES_DIR="$TEMPLATES_DIR/claude-context"
+CONTEXT_DIR_NAME="Meta/Claude Context"   # see claude-context skill: this path is configurable
 
 FOLDERS=(
   "00-Inbox"
@@ -19,6 +21,7 @@ FOLDERS=(
   "04-Archive"
   "05-Meeting-Transcripts"
   "06-People"
+  "$CONTEXT_DIR_NAME"
   "Daily"
   "Templates"
 )
@@ -37,6 +40,25 @@ if [ -d "$TEMPLATES_DIR" ]; then
       echo "skip (exists) $dest"
     else
       cp "$template" "$dest"
+      echo "copied $dest"
+    fi
+  done
+fi
+
+# Seed the session-context layer (see .claude/skills/claude-context/SKILL.md)
+# with starter, empty-but-structured files - not copied into Templates/,
+# since these are living files, not reusable new-note templates.
+CONTEXT_SOURCE_NAMES=("about.md" "current-focus.md" "open-threads.md" "decisions-log.md")
+CONTEXT_DEST_NAMES=("About.md" "Current Focus.md" "Open Threads.md" "Decisions Log.md")
+
+if [ -d "$CONTEXT_TEMPLATES_DIR" ]; then
+  for i in "${!CONTEXT_SOURCE_NAMES[@]}"; do
+    src="$CONTEXT_TEMPLATES_DIR/${CONTEXT_SOURCE_NAMES[$i]}"
+    dest="$VAULT_PATH/$CONTEXT_DIR_NAME/${CONTEXT_DEST_NAMES[$i]}"
+    if [ -f "$dest" ]; then
+      echo "skip (exists) $dest"
+    else
+      cp "$src" "$dest"
       echo "copied $dest"
     fi
   done

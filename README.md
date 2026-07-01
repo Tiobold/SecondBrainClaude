@@ -63,15 +63,16 @@ This creates:
 
 ```
 SecondBrain/
-├── 00-Inbox/                 # Quick capture — unsorted notes, Claude drops new notes here by default
-├── 01-Projects/              # Active, time-bound efforts
-├── 02-Areas/                 # Ongoing responsibilities (no end date)
-├── 03-Resources/             # Reference material, research, Claude-generated summaries
-├── 04-Archive/                # Completed / inactive
-├── 05-Meeting-Transcripts/    # Teams transcripts (see teams-meeting-notes skill)
-├── 06-People/                 # One note per person (see person-notes skill)
-├── Daily/                     # Daily notes (YYYY-MM-DD.md)
-└── Templates/                 # Copied from this repo's templates/ folder
+├── 00-Inbox/                    # Quick capture — unsorted notes, Claude drops new notes here by default
+├── 01-Projects/                 # Active, time-bound efforts
+├── 02-Areas/                    # Ongoing responsibilities (no end date)
+├── 03-Resources/                # Reference material, research, Claude-generated summaries
+├── 04-Archive/                  # Completed / inactive
+├── 05-Meeting-Transcripts/      # Teams transcripts (see teams-meeting-notes skill)
+├── 06-People/                   # One note per person (see person-notes skill)
+├── Meta/Claude Context/         # Session-context layer (see claude-context skill) — path is configurable
+├── Daily/                       # Daily notes (YYYY-MM-DD.md)
+└── Templates/                   # Copied from this repo's templates/ folder
 ```
 
 Open the resulting folder in Obsidian as a vault (`Open folder as vault`).
@@ -144,7 +145,53 @@ locally, and keep the real file out of version control (see `.gitignore` —
 
 ---
 
-## 5. Verify the connection
+## 5. Persistent session context
+
+Everything above gets Claude reading and writing vault files. This section
+is the piece that makes it a *second brain across sessions* rather than
+just a folder Claude happens to have access to: a small set of files Claude
+reads before responding and writes to as a session wraps up, so decisions,
+priorities, and open questions survive without living only in that
+session's chat history.
+
+This repo's `claude-context` skill (`.claude/skills/claude-context/SKILL.md`)
+defines four files, seeded by `scripts/setup-vault.sh` from
+`templates/claude-context/` into `Meta/Claude Context/` by default (the path
+is configurable):
+
+| File | Purpose |
+|---|---|
+| `About.md` | Stable facts about you — role, working style, standing preferences. Changes rarely, only on request. |
+| `Current Focus.md` | Active projects/priorities as a condensed, dated narrative. |
+| `Open Threads.md` | Questions/ideas without a home yet — removed once resolved, not marked done. |
+| `Decisions Log.md` | A running, dated, prose log of day-to-day decisions — distinct from `templates/decision-log.md`, which is for a single decision significant enough to warrant its own note. |
+
+**The skill only defines what to read and how to route writes — it doesn't
+trigger itself at session start.** That trigger has to be wired up per
+client:
+
+**Claude Code:** Claude Code auto-loads a `CLAUDE.md` file from the working
+directory at the start of every session, so the recommended wiring is a
+one-line pointer in your vault's `CLAUDE.md`:
+
+> Before responding, silently read `Meta/Claude Context/*.md` (About,
+> Current Focus, Open Threads, Decisions Log). Use the `claude-context`
+> skill to route any updates during or at the end of this session.
+
+**Claude Desktop (or any client without an auto-loaded memory file):** add
+the same instruction manually, as a custom system prompt or project
+instructions block:
+
+> Before responding, silently read `Meta/Claude Context/About.md`,
+> `Current Focus.md`, `Open Threads.md`, and `Decisions Log.md` from my
+> Obsidian vault. Don't narrate that you read them. At the end of a session
+> that produced decisions or priority changes worth keeping, update the
+> right file — see `.claude/skills/claude-context/SKILL.md` for how to
+> route updates.
+
+---
+
+## 6. Verify the connection
 
 Ask Claude:
 
@@ -156,7 +203,7 @@ If Claude can complete these, the connection is working.
 
 ---
 
-## 6. Suggested workflow
+## 7. Suggested workflow
 
 - **Capture fast, organize later:** tell Claude to drop anything worth
   remembering into `00-Inbox` using `templates/claude-chat-log.md`; sort it
@@ -181,7 +228,7 @@ If Claude can complete these, the connection is working.
 
 ---
 
-## 7. Claude Code skills
+## 8. Claude Code skills
 
 This repo ships [Claude Code skills](https://code.claude.com/docs) under
 `.claude/skills/` that travel with the vault repo. None of them talk to
@@ -196,6 +243,7 @@ connected and authorized, and tells you what's missing instead of guessing.
 | `meeting-prep` | Before a meeting, pull related project/people/decision notes from the vault into a short briefing linked from today's daily note. | Google Calendar or Outlook/Microsoft 365 MCP server |
 | `teams-meeting-notes` | Find calendar events with Teams links, retrieve the transcript, archive it in `05-Meeting-Transcripts/`, and write a summary + action items. Proposes (never silently applies) related updates to project/decision-log notes. | Microsoft 365 MCP server (Outlook calendar + Teams transcripts) |
 | `person-notes` | Maintain one note per person in `06-People/`: profile + interaction timeline, built from vault mentions and optionally enriched from Slack/Telegram/WhatsApp/Email. | None for vault-only sync; chat/email MCP servers for the optional research mode |
+| `claude-context` | Read `Meta/Claude Context/*.md` at the start of a session and route updates (decisions, priority shifts, open questions) to the right file at the end. See [section 5](#5-persistent-session-context). | None — pure vault read/write |
 
 `md-confluence`/`md-jira` keep a link back via frontmatter
 (`confluence-page-id`, `jira-key`) so re-running updates the same
@@ -211,11 +259,13 @@ skills only execute when invoked. `06-People/` notes stay current because
 for the people they touch as their last step, not because anything is
 watching the vault. Run `person-notes` directly (its whole-vault resync
 mode) to catch anything created before this was wired up, or by a note
-added outside those two skills.
+added outside those two skills. `claude-context` has the same limitation —
+see [section 5](#5-persistent-session-context) for how its session-start
+read actually gets triggered.
 
 ---
 
-## 8. Troubleshooting
+## 9. Troubleshooting
 
 | Symptom | Fix |
 |---|---|
@@ -238,7 +288,12 @@ added outside those two skills.
 │   ├── claude-chat-log.md
 │   ├── weekly-review.md
 │   ├── decision-log.md
-│   └── person.md
+│   ├── person.md
+│   └── claude-context/                # starter files for Meta/Claude Context/
+│       ├── about.md
+│       ├── current-focus.md
+│       ├── open-threads.md
+│       └── decisions-log.md
 ├── config/claude_desktop_config.example.json
 ├── .claude/skills/                    # Claude Code skills for this vault
 │   ├── md-confluence/SKILL.md         # push/pull notes <-> Confluence pages
@@ -246,7 +301,8 @@ added outside those two skills.
 │   ├── weekly-slack-update/SKILL.md   # draft + send a weekly team update
 │   ├── meeting-prep/SKILL.md          # pre-meeting briefing from the vault
 │   ├── teams-meeting-notes/SKILL.md   # Teams transcripts -> summary + actions
-│   └── person-notes/SKILL.md          # maintain 06-People/ profiles
+│   ├── person-notes/SKILL.md          # maintain 06-People/ profiles
+│   └── claude-context/SKILL.md        # persistent session-context layer
 └── docs/
     ├── video-script.md                # narration script / storyboard
     └── video/
