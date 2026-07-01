@@ -1,0 +1,9 @@
+# Local secrets / real MCP config (copy config/*.example.json instead)
+claude_desktop_config.json
+
+# OS cruft
+.DS_Store
+
+# Video build intermediates (kept out of git; final mp4 is committed separately)
+docs/video/slides/*.png
+docs/video/audio/*.wav

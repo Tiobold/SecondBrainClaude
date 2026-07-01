@@ -1,0 +1,103 @@
+[
+  {
+    "id": "scene01",
+    "kind": "title",
+    "title": "Obsidian as a Second Brain for Claude",
+    "subtitle": "A ClaudeTio guide",
+    "narration": "Welcome. This is a quick guide to turning Obsidian into a second brain for Claude, so your notes and project context survive across every conversation."
+  },
+  {
+    "id": "scene02",
+    "kind": "bullets",
+    "title": "Why Obsidian + Claude",
+    "items": [
+      "Plain markdown files on disk",
+      "No API lock-in",
+      "Human and AI edit the same notes",
+      "Durable memory across sessions"
+    ],
+    "narration": "An Obsidian vault is just a folder of plain markdown files. That makes it a perfect long-term memory for Claude: no lock-in, fully searchable, and linkable with wikilinks."
+  },
+  {
+    "id": "scene03",
+    "kind": "twocol",
+    "title": "Two ways to connect",
+    "colA_title": "Option A",
+    "colA_body": "Filesystem access\n\nSimplest setup\nClaude reads/writes vault files directly",
+    "colB_title": "Option B",
+    "colB_body": "Local REST API + MCP server\n\nStructured search\nTag & frontmatter queries",
+    "narration": "There are two ways to connect them. Option A, filesystem access, is the simplest: Claude just reads and writes files in your vault folder. Option B adds the Local REST API plugin and the M C P dash obsidian server, for structured search and tag queries."
+  },
+  {
+    "id": "scene04",
+    "kind": "tree",
+    "title": "Step 1: Vault structure",
+    "tree": [
+      "00-Inbox/",
+      "01-Projects/",
+      "02-Areas/",
+      "03-Resources/",
+      "04-Archive/",
+      "Daily/",
+      "Templates/"
+    ],
+    "narration": "Start by giving your vault a simple structure. This repo includes a setup script that creates the PARA folders: inbox, projects, areas, resources, and archive, plus a daily notes folder and templates."
+  },
+  {
+    "id": "scene05",
+    "kind": "code",
+    "title": "Run the setup script",
+    "code": "./scripts/setup-vault.sh ~/ObsidianVaults/SecondBrain",
+    "narration": "Run setup-vault dot s h and point it at your vault path. It creates every folder and copies in the note templates automatically."
+  },
+  {
+    "id": "scene06",
+    "kind": "code",
+    "title": "Option A: Filesystem access",
+    "code": "{\n  \"mcpServers\": {\n    \"obsidian-vault\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\",\n                \"/absolute/path/to/SecondBrain\"]\n    }\n  }\n}",
+    "narration": "For Claude Code, just tell it where your vault lives, it already reads and writes files directly. For Claude Desktop, add the filesystem M C P server to your config, pointed at your vault path."
+  },
+  {
+    "id": "scene07",
+    "kind": "bullets",
+    "title": "Option B: Local REST API + MCP",
+    "items": [
+      "Install the \"Local REST API\" community plugin",
+      "Copy the generated API key",
+      "Add mcp-obsidian to your Claude config",
+      "Restart Claude"
+    ],
+    "narration": "For richer search, install the Local REST API community plugin inside Obsidian, copy its API key, and add the M C P dash obsidian server to your Claude config with that key."
+  },
+  {
+    "id": "scene08",
+    "kind": "prompts",
+    "title": "Verify the connection",
+    "items": [
+      "List the folders in my Obsidian vault.",
+      "Create a note in 00-Inbox called test-note.md.",
+      "Search my vault for notes tagged #project."
+    ],
+    "narration": "Restart Claude, then verify the connection. Ask it to list your vault folders, create a test note, or search notes by tag."
+  },
+  {
+    "id": "scene09",
+    "kind": "bullets",
+    "title": "Suggested workflow",
+    "items": [
+      "Capture fast into the inbox",
+      "Log session summaries in the daily note",
+      "Link related notes instead of repeating context",
+      "Agree on a small, consistent tag vocabulary"
+    ],
+    "narration": "For day to day use: capture fast into the inbox, ask Claude to log session summaries into today's daily note, and link related notes instead of repeating context."
+  },
+  {
+    "id": "scene10",
+    "kind": "outro",
+    "title": "Get started",
+    "subtitle": "github.com/Tiobold/ClaudeTio",
+    "items": ["README.md", "scripts/setup-vault.sh", "templates/", "config/claude_desktop_config.example.json"],
+    "narration": "Everything shown here, the setup script, the templates, and the example config, is in the ClaudeTio repo. Check the README to get started."
+  }
+]
