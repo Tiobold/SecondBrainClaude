@@ -175,7 +175,30 @@ If Claude can complete these, the connection is working.
 
 ---
 
-## 7. Troubleshooting
+## 7. Claude Code skills: push/pull notes to Confluence & Jira
+
+This repo ships two [Claude Code skills](https://code.claude.com/docs) under
+`.claude/skills/` that travel with the vault repo:
+
+| Skill | What it does |
+|---|---|
+| `md-confluence` | Push a note to Confluence as a page (or update the linked page), or pull a Confluence page into the vault as a note. |
+| `md-jira` | Turn a note (or a single task in one) into a Jira ticket, or pull a Jira issue into the vault as a note. |
+
+Both directions keep a link back via frontmatter (`confluence-page-id`,
+`jira-key`, etc.) so re-running the skill updates the same page/ticket
+instead of creating duplicates — see each `SKILL.md` for the exact field
+contract and the markdown ⇄ Confluence/Jira formatting mapping.
+
+**Requires an Atlassian MCP server** (e.g. the official Atlassian Remote MCP
+server) connected and authorized in your Claude client — these skills don't
+talk to Confluence/Jira directly, they drive whatever Atlassian MCP tools
+you've connected. If none are available, the skill will tell you to connect
+one instead of guessing.
+
+---
+
+## 8. Troubleshooting
 
 | Symptom | Fix |
 |---|---|
@@ -199,6 +222,9 @@ If Claude can complete these, the connection is working.
 │   ├── weekly-review.md
 │   └── decision-log.md
 ├── config/claude_desktop_config.example.json
+├── .claude/skills/                    # Claude Code skills for this vault
+│   ├── md-confluence/SKILL.md         # push/pull notes <-> Confluence pages
+│   └── md-jira/SKILL.md               # push/pull notes <-> Jira issues
 └── docs/
     ├── video-script.md                # narration script / storyboard
     └── video/
