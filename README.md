@@ -72,7 +72,7 @@ the automated one just did.
   `scripts/setup-vault.sh` below to create one with a sensible structure).
 - [Claude Desktop](https://claude.ai/download) and/or [Claude Code](https://claude.com/claude-code).
 - Node.js 18+ for Option A's filesystem MCP server; **Node.js 24+** (or
-  [Bun](https://bun.sh/) 1.3+) for Option B's `obsidian-mcp-server` — see
+  [Bun](https://bun.sh/) 1.4+) for Option B's `obsidian-mcp-server` — see
   section 4.
 
 ---
@@ -150,6 +150,17 @@ against a heading, block, or frontmatter field), tag/frontmatter
 management, and search (text, JSONLogic, and BM25 via the optional
 Omnisearch plugin).
 
+> **Newer alternative:** the plugin (now listed as "Local REST API with MCP",
+> v5+) ships its own built-in MCP server at `https://127.0.0.1:27124/mcp/`
+> (HTTP port `27123`, if you enable it), authenticated with the same API key
+> as a bearer token. If you'd rather not install Node 24 and a second server,
+> point Claude Code at it with `claude mcp add --transport http obsidian
+> https://127.0.0.1:27124/mcp/ --header "Authorization: Bearer <key>"`, or
+> bridge Claude Desktop with `mcp-remote` — see the
+> [plugin's README](https://github.com/coddingtonbear/obsidian-local-rest-api#mcp-clients).
+> Tool names differ from `obsidian-mcp-server`'s; the steps below and the
+> setup scripts in this repo configure `obsidian-mcp-server`.
+
 1. In Obsidian: **Settings → Community plugins → Browse**, search for
    **"Local REST API"**, install and enable it (v4.0.0 or later). Or run
    `scripts/install-obsidian-plugin.sh /path/to/vault` to download and
@@ -180,7 +191,7 @@ Omnisearch plugin).
    }
    ```
 
-   Requires **Node.js 24+** (or [Bun](https://bun.sh/) 1.3+) — newer than
+   Requires **Node.js 24+** (or [Bun](https://bun.sh/) 1.4+) — newer than
    the Node 18+ needed for Option A; check your Node version before this
    step.
 4. Restart Claude Desktop. Keep Obsidian running (the REST API only serves
@@ -330,7 +341,7 @@ read actually gets triggered.
 | Claude says it has no file access | Confirm the MCP server entry is present and Claude Desktop was fully restarted (quit, not just closed). |
 | `obsidian-mcp-server` connection refused | Obsidian must be running with the vault open; check `OBSIDIAN_BASE_URL` matches the plugin's HTTPS port (default `27124`). |
 | Certificate / HTTPS errors from the REST API | The plugin uses a self-signed cert — `OBSIDIAN_VERIFY_SSL=false` (the default) handles this. If you switched to the plugin's non-encrypted HTTP port instead, set `OBSIDIAN_BASE_URL=http://127.0.0.1:27123` and enable "Non-encrypted (HTTP) Server" in the plugin settings. |
-| `obsidian-mcp-server` won't start / `command not found` | Check your Node version — this server needs Node.js 24+ (or Bun 1.3+), newer than Option A's filesystem server requires. |
+| `obsidian-mcp-server` won't start / `command not found` | Check your Node version — this server needs Node.js 24+ (or Bun 1.4+), newer than Option A's filesystem server requires. |
 | Filesystem server can't write | Check the path passed to `server-filesystem` is absolute and Claude Desktop's process has write permission to it. |
 
 ---
