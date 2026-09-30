@@ -2,13 +2,23 @@
 # Generates one narration WAV per scene from scenes.json.
 # Fully offline TTS - no cloud service is used.
 #
-# Usage: ./gen_audio.sh [festival-hts|espeak]   (default: festival-hts)
+# Usage: ./gen_audio.sh [kokoro|festival-hts|espeak] [kokoro-voice] [speed]
+#   kokoro (default) - neural voice, far less robotic. Needs
+#     `pip install kokoro-onnx soundfile`; downloads ~350 MB of model
+#     files once into .models/. Voices: af_heart (default), af_nicole,
+#     bf_emma, am_michael, bm_george, ...
+#   festival-hts / espeak - older, clearly synthetic fallbacks.
 set -euo pipefail
 
-ENGINE="${1:-festival-hts}"
+ENGINE="${1:-kokoro}"
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AUDIO_DIR="$DIR/audio"
 mkdir -p "$AUDIO_DIR"
+
+if [ "$ENGINE" = "kokoro" ]; then
+  python3 "$DIR/kokoro_tts.py" "$DIR/scenes.json" "$AUDIO_DIR" "${2:-af_heart}" "${3:-1.0}"
+  exit 0
+fi
 
 python3 - "$DIR/scenes.json" "$AUDIO_DIR" "$ENGINE" <<'PYEOF'
 import json, subprocess, sys, os

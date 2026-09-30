@@ -1,7 +1,8 @@
 # Optional: narrate the video in your own voice
 
-The video's narration currently uses Festival's offline `cmu_us_slt_arctic_hts`
-voice (see `../gen_audio.sh`). If you'd rather hear it in your own voice, this
+The video's narration currently uses the offline Kokoro neural voice
+`af_heart` (see `../gen_audio.sh` and `../kokoro_tts.py`; swap voices with
+`./gen_audio.sh kokoro bf_emma`). If you'd rather hear it in your own voice, this
 folder has a script that uses [Coqui XTTS-v2](https://github.com/coqui-ai/TTS)
 — a local voice-cloning model that needs only a short reference clip of you
 speaking.
