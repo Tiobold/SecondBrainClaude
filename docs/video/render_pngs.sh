@@ -4,8 +4,11 @@
 # in headless=new mode, so we render taller and crop to the target size.
 set -euo pipefail
 
-CHROME="/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Use the repo venv (created by scripts/install-video-deps.sh) if present.
+[ -f "$DIR/../../.venv/bin/activate" ] && source "$DIR/../../.venv/bin/activate"
+CHROME="$("$DIR/find_chrome.sh")" || { echo "No Chrome/Chromium found - run scripts/install-video-deps.sh or set CHROME=/path/to/binary" >&2; exit 1; }
 SLIDES_DIR="$DIR/slides"
 
 for f in "$SLIDES_DIR"/scene*.html; do

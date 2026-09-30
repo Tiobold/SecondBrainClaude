@@ -14,3 +14,6 @@ docs/video/.segments/
 docs/video/voice-clone/*.wav
 docs/video/voice-clone/*.mp3
 docs/video/voice-clone/.venv/
+
+# Video-build venv
+.venv/

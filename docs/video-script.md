@@ -132,7 +132,7 @@ the daily note · Link related notes instead of repeating context
 ## Rebuilding the video
 
 ```bash
-pip install kokoro-onnx soundfile pillow      # once; also needs node + ffmpeg + Chromium
+./scripts/install-video-deps.sh               # once: .venv + node/ffmpeg/Chrome checks
 docs/video/build.sh                           # slides -> PNGs -> narration -> MP4
 docs/video/build.sh --skip-audio              # reuse existing audio/*.wav
 docs/video/gen_audio.sh kokoro bf_emma 1.0    # regenerate audio only, other voice/speed

@@ -1,0 +1,5 @@
+# Python dependencies for rebuilding the walkthrough video (docs/video/).
+# Install everything (Python + system tools) with: ./scripts/install-video-deps.sh
+kokoro-onnx>=0.4,<1
+soundfile>=0.12
+pillow>=10

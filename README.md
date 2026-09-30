@@ -7,6 +7,7 @@ carry across every conversation instead of living only in chat history.
 
 **Video walkthrough:** [`docs/video/obsidian-second-brain.mp4`](docs/video/obsidian-second-brain.mp4)
 **Narration script / storyboard:** [`docs/video-script.md`](docs/video-script.md)
+**Rebuild the video:** `./scripts/install-video-deps.sh` once, then `docs/video/build.sh` (see [`docs/video-script.md`](docs/video-script.md#rebuilding-the-video)).
 **Want it narrated in your own voice?** [`docs/video/voice-clone/README.md`](docs/video/voice-clone/README.md)
 
 ---
@@ -350,8 +351,10 @@ read actually gets triggered.
 
 ```
 ├── README.md                          # this guide
+├── requirements.txt                   # Python deps for rebuilding the video
 ├── scripts/
 │   ├── setup-all.sh                   # orchestrator: runs everything below
+│   ├── install-video-deps.sh          # venv + deps for rebuilding the video
 │   ├── setup-vault.sh                 # creates the PARA vault structure + templates
 │   ├── install-obsidian-plugin.sh     # downloads + enables the Local REST API plugin
 │   ├── configure-claude-desktop.sh    # merges MCP entries into your real Claude Desktop config

@@ -12,6 +12,9 @@ set -euo pipefail
 
 ENGINE="${1:-kokoro}"
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Use the repo venv (created by scripts/install-video-deps.sh) if present.
+[ -f "$DIR/../../.venv/bin/activate" ] && source "$DIR/../../.venv/bin/activate"
 AUDIO_DIR="$DIR/audio"
 mkdir -p "$AUDIO_DIR"
 

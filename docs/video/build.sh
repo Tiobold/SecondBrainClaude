@@ -15,6 +15,9 @@ for arg in "$@"; do
 done
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Use the repo venv (created by scripts/install-video-deps.sh) if present.
+[ -f "$DIR/../../.venv/bin/activate" ] && source "$DIR/../../.venv/bin/activate"
 SLIDES_DIR="$DIR/slides"
 AUDIO_DIR="$DIR/audio"
 SEGMENTS_DIR="$DIR/.segments"
