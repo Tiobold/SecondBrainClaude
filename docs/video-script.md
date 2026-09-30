@@ -93,7 +93,24 @@ note in 00-Inbox" · "Search notes tagged project"
 
 ---
 
-### Scene 9 — Suggested workflow
+### Scene 9 — Persistent session context
+**Slide:** bullets — About · Current Focus · Open Threads · Decisions Log
+
+**Narration:**
+> The piece that makes it a second brain across sessions is a small context layer. Four files in Meta slash Claude Context: About, Current Focus, Open Threads, and a Decisions Log. Claude reads them before it responds, and updates them when a session produces a decision. In Claude Code, a one line pointer in your vault's CLAUDE dot M D wires that up for you.
+
+---
+
+### Scene 10 — Claude Code skills
+**Slide:** bullets — meeting-prep, teams-meeting-notes · person-notes ·
+md-confluence, md-jira · weekly-slack-update
+
+**Narration:**
+> The repo also ships Claude Code skills. Meeting prep and Teams meeting notes turn your calendar into briefings and summaries. Person notes keeps one profile per colleague. Markdown to Confluence and Jira moves notes in and out of your tickets and pages. And the weekly Slack update drafts a summary for you to approve before anything is sent.
+
+---
+
+### Scene 11 — Suggested workflow
 **Slide:** bullets — Capture fast into the inbox · Log session summaries in
 the daily note · Link related notes instead of repeating context
 
@@ -104,30 +121,32 @@ the daily note · Link related notes instead of repeating context
 
 ---
 
-### Scene 10 — Get started
-**Slide:** "SecondBrainClaude" repo · README.md · scripts/ · templates/ · config/
+### Scene 12 — Get started
+**Slide:** "SecondBrainClaude" repo · README.md · scripts/setup-all.sh · templates/ · .claude/skills/
 
 **Narration:**
-> Everything shown here, the setup script, the templates, and the example
-> config, is in the Second Brain Claude repo. Check the README to get started.
+> Everything shown here, the setup scripts, the templates, the skills, and the example config, is in the Second Brain Claude repo. Check the README to get started.
 
 ---
 
 ## Rebuilding the video
 
 ```bash
-docs/video/build.sh
+pip install kokoro-onnx soundfile pillow      # once; also needs node + ffmpeg + Chromium
+docs/video/build.sh                           # slides -> PNGs -> narration -> MP4
+docs/video/build.sh --skip-audio              # reuse existing audio/*.wav
+docs/video/gen_audio.sh kokoro bf_emma 1.0    # regenerate audio only, other voice/speed
 ```
 
 Regenerates slide PNGs (headless Chromium), narration WAVs, and re-muxes the
-final MP4 with `ffmpeg`. Narration defaults to Festival's offline
-`cmu_us_slt_arctic_hts` voice (`gen_audio.sh`, statistical parametric —
-noticeably smoother than `espeak-ng`'s formant synthesis, which is still
-available via `gen_audio.sh espeak`). Everything here runs locally; no cloud
-TTS is used.
+final MP4 with `ffmpeg`. Narration uses the offline Kokoro neural voice
+(`kokoro_tts.py`; ~350 MB of model files download once into `.models/`).
+`gen_audio.sh festival-hts` and `gen_audio.sh espeak` remain as older, more
+robotic fallbacks. Everything runs locally; no cloud TTS is used.
+To change what the video says or shows, edit `scenes.json` (and keep this
+file in sync), then rebuild.
 
 **Want it in your own voice?** See `docs/video/voice-clone/README.md` — a
 Coqui XTTS-v2 script that clones narration from a short recording of you.
-It has to run on a machine with normal internet access (not this repo's
-sandboxed build environment), then feed the result back in with
-`docs/video/build.sh --skip-audio`.
+It needs a machine with normal internet access, then feed the result back in
+with `docs/video/build.sh --skip-audio`.

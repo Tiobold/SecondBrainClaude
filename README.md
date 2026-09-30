@@ -385,5 +385,6 @@ read actually gets triggered.
     └── video/
         ├── obsidian-second-brain.mp4  # the video
         ├── build.sh                   # rebuild pipeline (slides + TTS + ffmpeg)
+        ├── kokoro_tts.py              # offline neural narration (default voice)
         └── voice-clone/               # optional: narrate in your own voice
 ```

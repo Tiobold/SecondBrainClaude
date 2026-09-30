@@ -83,6 +83,30 @@
   {
     "id": "scene09",
     "kind": "bullets",
+    "title": "Persistent session context",
+    "items": [
+      "About: stable facts about you",
+      "Current Focus: active priorities",
+      "Open Threads: unresolved questions",
+      "Decisions Log: what you settled, and why"
+    ],
+    "narration": "The piece that makes it a second brain across sessions is a small context layer. Four files in Meta slash Claude Context: About, Current Focus, Open Threads, and a Decisions Log. Claude reads them before it responds, and updates them when a session produces a decision. In Claude Code, a one line pointer in your vault's CLAUDE dot M D wires that up for you."
+  },
+  {
+    "id": "scene10",
+    "kind": "bullets",
+    "title": "Claude Code skills",
+    "items": [
+      "meeting-prep, teams-meeting-notes",
+      "person-notes: one note per person",
+      "md-confluence, md-jira",
+      "weekly-slack-update: draft, then approve"
+    ],
+    "narration": "The repo also ships Claude Code skills. Meeting prep and Teams meeting notes turn your calendar into briefings and summaries. Person notes keeps one profile per colleague. Markdown to Confluence and Jira moves notes in and out of your tickets and pages. And the weekly Slack update drafts a summary for you to approve before anything is sent."
+  },
+  {
+    "id": "scene11",
+    "kind": "bullets",
     "title": "Suggested workflow",
     "items": [
       "Capture fast into the inbox",
@@ -93,11 +117,16 @@
     "narration": "For day to day use: capture fast into the inbox, ask Claude to log session summaries into today's daily note, and link related notes instead of repeating context."
   },
   {
-    "id": "scene10",
+    "id": "scene12",
     "kind": "outro",
     "title": "Get started",
     "subtitle": "github.com/Tiobold/SecondBrainClaude",
-    "items": ["README.md", "scripts/setup-vault.sh", "templates/", "config/claude_desktop_config.example.json"],
-    "narration": "Everything shown here, the setup script, the templates, and the example config, is in the Second Brain Claude repo. Check the README to get started."
+    "items": [
+      "README.md",
+      "scripts/setup-all.sh",
+      "templates/",
+      ".claude/skills/"
+    ],
+    "narration": "Everything shown here, the setup scripts, the templates, the skills, and the example config, is in the Second Brain Claude repo. Check the README to get started."
   }
 ]
