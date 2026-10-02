@@ -41,14 +41,26 @@
   .prompts { display: flex; flex-direction: column; gap: 34px; }
   .prompt { font-size: 38px; background: rgba(139,92,246,0.12); border-left: 8px solid #8b5cf6;
             border-radius: 10px; padding: 26px 40px; font-style: italic; color: #f1ecf7; }
+  .chat { display: flex; flex-direction: column; gap: 22px; }
+  .msg { max-width: 1280px; font-size: 32px; line-height: 1.45; padding: 22px 34px; border-radius: 26px; }
+  .msg .who { font-size: 22px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .msg.user { align-self: flex-end; background: rgba(139,92,246,0.22); border: 1px solid #8b5cf6; border-bottom-right-radius: 6px; }
+  .msg.user .who { color: #c9b6ef; }
+  .msg.claude { align-self: flex-start; background: rgba(217,119,87,0.14); border: 1px solid #d97757; border-bottom-left-radius: 6px; }
+  .msg.claude .who { color: #e8a58d; }
+  .tools { align-self: flex-start; display: flex; flex-wrap: wrap; gap: 12px; }
+  .tool { font-family: 'DejaVu Sans Mono', monospace; font-size: 23px; color: #b79bea; background: #1a1424;
+          border: 1px solid #4b3a6b; border-radius: 999px; padding: 8px 20px; }
+  .tool b { color: #d97757; font-weight: 700; margin-right: 8px; }
+  .notebox { align-self: flex-start; font-family: 'DejaVu Sans Mono', monospace; font-size: 25px; line-height: 1.5;
+             background: #1a1424; border: 1px dashed #4b3a6b; border-radius: 14px; padding: 16px 26px; color: #d9c9ff; white-space: pre-wrap; }
+  .notebox .file { color: #7c6a95; font-size: 21px; display: block; margin-bottom: 4px; }
   .footer { margin-top: 40px; font-size: 28px; color: #7c6a95; }
 </style></head><body>
     <div class="frame">
     <div class="badge"><span class="dot"></span>SecondBrainClaude</div>
-    <h1>Get started</h1>
-    <div class="content" style="align-items:center; text-align:center;">
-        <div class="subtitle">github.com/Tiobold/SecondBrainClaude</div>
-        <ul class="bullets" style="text-align:left; max-width:1100px; margin-top:30px;"><li>README.md</li><li>scripts/setup-all.sh</li><li>templates/</li><li>.claude/skills/</li></ul>
-      </div>
+    <h1 style="font-size:56px;margin-bottom:6px;">In practice: capturing a decision</h1>
+    <div class="content"><div class="chat"><div class="msg user"><div class="who">You</div>Let's go with a March 3 cutover, after the backfill job is validated. Remember that.</div><div class="tools"><span class="tool"><b>Append</b>Decisions Log.md</span><span class="tool"><b>Patch</b>01-Projects/Atlas Migration.md</span><span class="tool"><b>Edit</b>Open Threads.md</span></div><div class="notebox"><span class="file">Meta/Claude Context/Decisions Log.md</span>## 2026-10-02
+Cutover set for March 3, once the backfill job is validated.</div><div class="msg claude"><div class="who">Claude</div>Logged under today's date and added to [[Atlas Migration]]. I removed the cutover question from Open Threads, since it's resolved.</div></div></div>
     <div class="footer">Obsidian as a Second Brain for Claude — docs/video-script.md</div>
   </body></html>

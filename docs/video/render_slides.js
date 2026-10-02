@@ -61,13 +61,28 @@ const BASE_CSS = `
   .prompts { display: flex; flex-direction: column; gap: 34px; }
   .prompt { font-size: 38px; background: rgba(139,92,246,0.12); border-left: 8px solid #8b5cf6;
             border-radius: 10px; padding: 26px 40px; font-style: italic; color: #f1ecf7; }
+  .chat { display: flex; flex-direction: column; gap: 22px; }
+  .msg { max-width: 1280px; font-size: 32px; line-height: 1.45; padding: 22px 34px; border-radius: 26px; }
+  .msg .who { font-size: 22px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .msg.user { align-self: flex-end; background: rgba(139,92,246,0.22); border: 1px solid #8b5cf6; border-bottom-right-radius: 6px; }
+  .msg.user .who { color: #c9b6ef; }
+  .msg.claude { align-self: flex-start; background: rgba(217,119,87,0.14); border: 1px solid #d97757; border-bottom-left-radius: 6px; }
+  .msg.claude .who { color: #e8a58d; }
+  .tools { align-self: flex-start; display: flex; flex-wrap: wrap; gap: 12px; }
+  .tool { font-family: 'DejaVu Sans Mono', monospace; font-size: 23px; color: #b79bea; background: #1a1424;
+          border: 1px solid #4b3a6b; border-radius: 999px; padding: 8px 20px; }
+  .tool b { color: #d97757; font-weight: 700; margin-right: 8px; }
+  .notebox { align-self: flex-start; font-family: 'DejaVu Sans Mono', monospace; font-size: 25px; line-height: 1.5;
+             background: #1a1424; border: 1px dashed #4b3a6b; border-radius: 14px; padding: 16px 26px; color: #d9c9ff; white-space: pre-wrap; }
+  .notebox .file { color: #7c6a95; font-size: 21px; display: block; margin-bottom: 4px; }
   .footer { margin-top: 40px; font-size: 28px; color: #7c6a95; }
 `;
 
 function frameOpen(scene, badge) {
+  const h1 = scene.kind === "chat" ? ' style="font-size:56px;margin-bottom:6px;"' : "";
   return `<div class="frame">
     <div class="badge"><span class="dot"></span>${esc(badge)}</div>
-    <h1>${esc(scene.title)}</h1>`;
+    <h1${h1}>${esc(scene.title)}</h1>`;
 }
 
 function renderScene(scene) {
@@ -102,6 +117,13 @@ function renderScene(scene) {
       break;
     case "prompts":
       body = `<div class="content"><div class="prompts">${scene.items.map(i => `<div class="prompt">"${esc(i)}"</div>`).join("")}</div></div>`;
+      break;
+    case "chat":
+      body = `<div class="content"><div class="chat">${scene.chat.map(m => {
+        if (m.role === "tools") return `<div class="tools">${m.items.map(t => `<span class="tool"><b>${esc(t.verb)}</b>${esc(t.target)}</span>`).join("")}</div>`;
+        if (m.role === "note") return `<div class="notebox"><span class="file">${esc(m.file)}</span>${esc(m.text)}</div>`;
+        return `<div class="msg ${m.role}"><div class="who">${m.role === "user" ? "You" : "Claude"}</div>${esc(m.text)}</div>`;
+      }).join("")}</div></div>`;
       break;
     case "outro":
       body = `<div class="content" style="align-items:center; text-align:center;">

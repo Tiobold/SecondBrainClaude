@@ -110,7 +110,31 @@ md-confluence, md-jira · weekly-slack-update
 
 ---
 
-### Scene 11 — Suggested workflow
+### Scene 11 — In practice: picking up where you left off
+**Slide:** Chat simulation — You: "Let's pick up the Atlas migration where we left off." · Claude reads Current Focus, Open Threads, Decisions Log · Claude recalls the Postgres decision and the open cutover question
+
+**Narration:**
+> Here is what it looks like in practice. You open a new chat and say, let's pick up the Atlas migration where we left off. Claude quietly reads your context files first. Then it answers with what you decided last week, and what is still open, without you pasting in a single thing.
+
+---
+
+### Scene 12 — In practice: capturing a decision
+**Slide:** Chat simulation — You: "Let's go with a March 3 cutover… Remember that." · Claude appends to Decisions Log, patches the project note, edits Open Threads · Claude confirms what it logged
+
+**Narration:**
+> Later in the chat you make a call. Claude writes it down in one sentence under today's date, adds it to the project note, and removes the question from open threads, because it is resolved. That is the whole habit: decisions land in the vault, not just in chat history.
+
+---
+
+### Scene 13 — In practice: preparing for a meeting
+**Slide:** Chat simulation — You: "Prep me for my 2pm with Dana." · Claude reads the calendar, Dana's person note, and the project note · Claude summarizes who she is and what she flagged
+
+**Narration:**
+> Or ask for a meeting prep. Claude finds the event on your calendar, pulls Dana's person note and the project note, and tells you who she is, what she owns, and what she flagged last time. The briefing is saved and linked from today's daily note.
+
+---
+
+### Scene 14 — Suggested workflow
 **Slide:** bullets — Capture fast into the inbox · Log session summaries in
 the daily note · Link related notes instead of repeating context
 
@@ -121,7 +145,7 @@ the daily note · Link related notes instead of repeating context
 
 ---
 
-### Scene 12 — Get started
+### Scene 15 — Get started
 **Slide:** "SecondBrainClaude" repo · README.md · scripts/setup-all.sh · templates/ · .claude/skills/
 
 **Narration:**

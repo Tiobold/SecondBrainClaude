@@ -106,6 +106,110 @@
   },
   {
     "id": "scene11",
+    "kind": "chat",
+    "title": "In practice: picking up where you left off",
+    "chat": [
+      {
+        "role": "user",
+        "text": "Let's pick up the Atlas migration where we left off."
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Read",
+            "target": "Meta/Claude Context/Current Focus.md"
+          },
+          {
+            "verb": "Read",
+            "target": "Meta/Claude Context/Open Threads.md"
+          },
+          {
+            "verb": "Read",
+            "target": "Meta/Claude Context/Decisions Log.md"
+          }
+        ]
+      },
+      {
+        "role": "claude",
+        "text": "Last Thursday you settled on Postgres over DynamoDB, mostly for the joins. The open question is still the cutover date. Want to start there?"
+      }
+    ],
+    "narration": "Here is what it looks like in practice. You open a new chat and say, let's pick up the Atlas migration where we left off. Claude quietly reads your context files first. Then it answers with what you decided last week, and what is still open, without you pasting in a single thing."
+  },
+  {
+    "id": "scene12",
+    "kind": "chat",
+    "title": "In practice: capturing a decision",
+    "chat": [
+      {
+        "role": "user",
+        "text": "Let's go with a March 3 cutover, after the backfill job is validated. Remember that."
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Append",
+            "target": "Decisions Log.md"
+          },
+          {
+            "verb": "Patch",
+            "target": "01-Projects/Atlas Migration.md"
+          },
+          {
+            "verb": "Edit",
+            "target": "Open Threads.md"
+          }
+        ]
+      },
+      {
+        "role": "note",
+        "file": "Meta/Claude Context/Decisions Log.md",
+        "text": "## 2026-10-02\nCutover set for March 3, once the backfill job is validated."
+      },
+      {
+        "role": "claude",
+        "text": "Logged under today's date and added to [[Atlas Migration]]. I removed the cutover question from Open Threads, since it's resolved."
+      }
+    ],
+    "narration": "Later in the chat you make a call. Claude writes it down in one sentence under today's date, adds it to the project note, and removes the question from open threads, because it is resolved. That is the whole habit: decisions land in the vault, not just in chat history."
+  },
+  {
+    "id": "scene13",
+    "kind": "chat",
+    "title": "In practice: preparing for a meeting",
+    "chat": [
+      {
+        "role": "user",
+        "text": "Prep me for my 2pm with Dana."
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Calendar",
+            "target": "today 2:00pm"
+          },
+          {
+            "verb": "Read",
+            "target": "06-People/Dana Reyes.md"
+          },
+          {
+            "verb": "Read",
+            "target": "01-Projects/Atlas Migration.md"
+          }
+        ]
+      },
+      {
+        "role": "claude",
+        "text": "Dana leads data engineering and owns the backfill job your March 3 cutover depends on. Last sync she flagged its runtime as a risk. I saved a briefing and linked it from today's daily note."
+      }
+    ],
+    "narration": "Or ask for a meeting prep. Claude finds the event on your calendar, pulls Dana's person note and the project note, and tells you who she is, what she owns, and what she flagged last time. The briefing is saved and linked from today's daily note."
+  },
+  {
+    "id": "scene14",
     "kind": "bullets",
     "title": "Suggested workflow",
     "items": [
@@ -117,7 +221,7 @@
     "narration": "For day to day use: capture fast into the inbox, ask Claude to log session summaries into today's daily note, and link related notes instead of repeating context."
   },
   {
-    "id": "scene12",
+    "id": "scene15",
     "kind": "outro",
     "title": "Get started",
     "subtitle": "github.com/Tiobold/SecondBrainClaude",
