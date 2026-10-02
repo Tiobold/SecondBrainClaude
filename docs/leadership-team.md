@@ -6,6 +6,8 @@ personal vaults, Slack, Teams, Jira, and Confluence stay as they are.
 Once a day, what the whole team needs in order to decide well flows into a
 shared Confluence space, and a morning brief flows back out.
 
+**Video walkthrough:** [`docs/video/leadership-team/leadership-team.mp4`](video/leadership-team/leadership-team.mp4) ([script](leadership-video-script.md))
+
 ## The design in one paragraph
 
 **Federate the contributions, centralize the synthesis.** Each leader's own

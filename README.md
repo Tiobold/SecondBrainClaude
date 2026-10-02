@@ -6,7 +6,7 @@ Claude can read from and write to — so your notes, projects, and decisions
 carry across every conversation instead of living only in chat history.
 
 **Video walkthrough:** [`docs/video/obsidian-second-brain.mp4`](docs/video/obsidian-second-brain.mp4)
-**Leadership team variant:** [`docs/leadership-team.md`](docs/leadership-team.md)
+**Leadership team variant:** [`docs/leadership-team.md`](docs/leadership-team.md) · [video](docs/video/leadership-team/leadership-team.mp4) · [script](docs/leadership-video-script.md)
 **Narration script / storyboard:** [`docs/video-script.md`](docs/video-script.md)
 **Rebuild the video:** `./scripts/install-video-deps.sh` once, then `docs/video/build.sh` (see [`docs/video-script.md`](docs/video-script.md#rebuilding-the-video)).
 **Want it narrated in your own voice?** [`docs/video/voice-clone/README.md`](docs/video/voice-clone/README.md)
@@ -431,6 +431,7 @@ write a brief. Four skills (`lt-setup`, `lt-contribute`, `lt-brief`,
     └── video/
         ├── obsidian-second-brain.mp4  # the video
         ├── build.sh                   # rebuild pipeline (slides + TTS + ffmpeg)
+        ├── leadership-team/           # second video: scenes.json + leadership-team.mp4
         ├── kokoro_tts.py              # offline neural narration (default voice)
         └── voice-clone/               # optional: narrate in your own voice
 ```

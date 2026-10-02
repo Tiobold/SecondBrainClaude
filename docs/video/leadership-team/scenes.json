@@ -1,0 +1,270 @@
+[
+  {
+    "id": "scene01",
+    "kind": "title",
+    "title": "A Leadership Second Brain",
+    "subtitle": "A shared layer for the leadership team, on top of everyone's own setup",
+    "narration": "Welcome. This is a short guide to a leadership second brain: a shared layer for a small leadership team, built on Confluence, that sits on top of everyone's own notes and tools.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene02",
+    "kind": "bullets",
+    "title": "The problem",
+    "items": [
+      "Every leader has a private brain",
+      "Decisions live in DMs and meetings",
+      "What the team needs to know is scattered",
+      "Nobody can read everyone's inbox, and shouldn't"
+    ],
+    "narration": "Every leader already has a private second brain. But decisions end up in direct messages and meetings, and what the whole team needs to know is scattered. You cannot, and should not, solve that by letting one tool read everyone's messages.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene03",
+    "kind": "twocol",
+    "title": "The design",
+    "colA_title": "Federate the contributions",
+    "colA_body": "Each leader's own Claude reads their own sources\n\nPublishes a short distillation\nOnly after they approve it",
+    "colB_title": "Centralize the synthesis",
+    "colB_body": "One run reads only the shared space\n\nWrites one daily brief\nNever touches personal notes",
+    "narration": "The design has two halves. Federate the contributions: each leader's own Claude reads only that leader's sources, and publishes a short distillation after they approve it. Centralize the synthesis: one scheduled run reads only the shared space and writes the brief. Nobody's raw messages are ever visible to anyone else.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene04",
+    "kind": "tree",
+    "title": "The shared space in Confluence",
+    "tree": [
+      "LT Second Brain",
+      "  LT Focus  (owner only)",
+      "  Decisions",
+      "  Asks and Risks / Open, Closed",
+      "  Contributions",
+      "  Briefs"
+    ],
+    "narration": "It lives in one restricted Confluence space, limited to exactly the leadership team. There is a focus page that only the senior director edits, one page per decision, one page per ask or risk, one contribution page per person per day, and the briefs. Every page has a single author, so nobody ever edits the same page.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene05",
+    "kind": "bullets",
+    "title": "Guardrails",
+    "items": [
+      "Space restricted to the members",
+      "Agents draft, humans approve",
+      "Denylist: personal and people notes never leave",
+      "Sensitivity screen drops anything about individuals"
+    ],
+    "narration": "The guardrails matter more than the automation. The space is restricted to the members. Agents draft and humans approve. A denylist keeps people notes and development plans in your private vault, and a sensitivity screen drops anything about an individual's performance, pay, or health, and reports only a count of what it left out.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene06",
+    "kind": "chat",
+    "title": "Evening: the contribution draft",
+    "chat": [
+      {
+        "role": "banner",
+        "when": "17:45 weekdays",
+        "text": "  claude -p \"Run the daily-sync skill.\""
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Read",
+            "target": "Decisions Log.md"
+          },
+          {
+            "verb": "Read",
+            "target": "01-Projects/ (allowlist)"
+          },
+          {
+            "verb": "Skip",
+            "target": "06-People/ (denylist)"
+          },
+          {
+            "verb": "Save",
+            "target": "Daily/2026-10-01.md"
+          }
+        ]
+      },
+      {
+        "role": "note",
+        "file": "Daily/2026-10-01.md  ·  ## LT draft",
+        "text": "Decision: cutover set for March 3, once the backfill is validated.\nAsk to Priya: confirm vendor timeline, due Friday.\nWithheld: 2 items."
+      },
+      {
+        "role": "claude",
+        "text": "LT draft saved, not published. It is waiting for your approval."
+      }
+    ],
+    "narration": "Here is the daily rhythm. At the end of the day a scheduler runs the daily sync, which saves a leadership draft in your own daily note. It only read the folders on your allowlist, it skipped the people folder, and it kept only what would change a peer's decision. Two items were withheld, and the draft is not published.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene07",
+    "kind": "chat",
+    "title": "Approve and publish",
+    "chat": [
+      {
+        "role": "user",
+        "text": "Publish my LT contribution."
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Create",
+            "target": "Contribution 2026-10-01 · Alex"
+          },
+          {
+            "verb": "Create",
+            "target": "D-2026-10-01 Cutover March 3"
+          },
+          {
+            "verb": "Create",
+            "target": "ASK 2026-10-01 · To: Priya"
+          }
+        ]
+      },
+      {
+        "role": "claude",
+        "text": "Published to the LT space after your approval: your contribution, one decision page, and one ask addressed to Priya, due Friday."
+      }
+    ],
+    "narration": "Next morning you review it, and say publish. Claude shows you the exact text first, then creates your contribution page, plus one page for the decision and one for the ask, with a named person and a due date. Nothing leaves your vault until you say yes.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene08",
+    "kind": "chat",
+    "title": "Morning: the brief",
+    "chat": [
+      {
+        "role": "banner",
+        "when": "07:00 weekdays",
+        "text": "  claude -p \"Run the lt-brief skill in daily mode.\""
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Read",
+            "target": "Contributions (3)"
+          },
+          {
+            "verb": "Read",
+            "target": "Decisions (1 new)"
+          },
+          {
+            "verb": "Read",
+            "target": "Asks and Risks / Open"
+          },
+          {
+            "verb": "Create",
+            "target": "Brief 2026-10-02"
+          }
+        ]
+      },
+      {
+        "role": "note",
+        "file": "Brief 2026-10-02",
+        "text": "Read this first: cutover set for March 3 (Alex). Ask to Priya due Friday.\nRisks nobody owns: vendor timeline.\nNo contribution from: Sam."
+      },
+      {
+        "role": "claude",
+        "text": "Brief published. Slack draft saved for the private LT channel, not sent."
+      }
+    ],
+    "narration": "The next morning, one run reads only the shared space and writes the brief. It leads with what changes someone's decision, lists asks by person with overdue items first, flags risks nobody owns, and names whoever did not contribute instead of hiding the gap. It saves a Slack draft, and only sends if the channel is private and its members match your team exactly.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene09",
+    "kind": "chat",
+    "title": "Starting a session",
+    "chat": [
+      {
+        "role": "user",
+        "text": "What does the LT need from me?"
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Read",
+            "target": "LT Focus"
+          },
+          {
+            "verb": "Read",
+            "target": "Brief 2026-10-02"
+          },
+          {
+            "verb": "Search",
+            "target": "Open asks: To Alex"
+          }
+        ]
+      },
+      {
+        "role": "claude",
+        "text": "Two asks. Overdue: confirm the backfill runtime for Dana, due Wednesday. Due Friday: review the vendor options Sam shared. Priorities this quarter are unchanged."
+      }
+    ],
+    "narration": "When you open a session, your Claude loads the shared layer first: the team's focus, the latest brief, and the asks addressed to you. Ask what the leadership team needs from you, and it answers with the overdue item first.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene10",
+    "kind": "chat",
+    "title": "Raising an ask",
+    "chat": [
+      {
+        "role": "user",
+        "text": "Ask Sam to confirm the vendor timeline by Friday."
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Create",
+            "target": "ASK 2026-10-02 · To: Sam · Vendor timeline"
+          }
+        ]
+      },
+      {
+        "role": "claude",
+        "text": "Created under Asks and Risks, Open: to Sam, due Friday. It will appear in Sam's next session and in tomorrow's brief."
+      }
+    ],
+    "narration": "And you can raise an ask in plain language. Claude creates a page with one named person and a due date. It shows up in Sam's next session and in tomorrow's brief, so it never depends on someone remembering to follow up.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene11",
+    "kind": "bullets",
+    "title": "Rollout",
+    "items": [
+      "Week 1: dry runs, post by hand",
+      "Week 2: scheduled contribution drafts",
+      "Week 3: scheduled brief, Slack as draft",
+      "Review the denylist before anything else"
+    ],
+    "narration": "Do not automate on day one. In week one, run everything as dry runs and post by hand, and tune your allowlist. In week two, schedule the contribution drafts. In week three, schedule the brief, and keep Slack as a draft until you trust it. And review your denylist before anything else.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  },
+  {
+    "id": "scene12",
+    "kind": "outro",
+    "title": "Get started",
+    "subtitle": "github.com/Tiobold/SecondBrainClaude",
+    "items": [
+      "docs/leadership-team.md",
+      "skills: lt-setup, lt-contribute, lt-brief, lt-context",
+      "templates/leadership/"
+    ],
+    "narration": "Everything shown here is in the Second Brain Claude repo: the guide, four skills, and the Confluence page templates. Start with the leadership team document.",
+    "footer": "Leadership second brain — docs/leadership-team.md"
+  }
+]

@@ -5,8 +5,9 @@
 const fs = require("fs");
 const path = require("path");
 
-const SCENES_PATH = path.join(__dirname, "scenes.json");
-const OUT_DIR = path.join(__dirname, "slides");
+const WORK = process.env.VIDEO_DIR || __dirname;
+const SCENES_PATH = path.join(WORK, "scenes.json");
+const OUT_DIR = path.join(WORK, "slides");
 const scenes = JSON.parse(fs.readFileSync(SCENES_PATH, "utf8"));
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -142,7 +143,7 @@ function renderScene(scene) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${BASE_CSS}</style></head><body>
     ${frameOpen(scene, "SecondBrainClaude")}
     ${body}
-    <div class="footer">Obsidian as a Second Brain for Claude — docs/video-script.md</div>
+    <div class="footer">${esc(scene.footer || "Obsidian as a Second Brain for Claude — docs/video-script.md")}</div>
   </body></html>`;
 }
 

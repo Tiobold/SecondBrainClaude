@@ -9,7 +9,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Use the repo venv (created by scripts/install-video-deps.sh) if present.
 [ -f "$DIR/../../.venv/bin/activate" ] && source "$DIR/../../.venv/bin/activate"
 CHROME="$("$DIR/find_chrome.sh")" || { echo "No Chrome/Chromium found - run scripts/install-video-deps.sh or set CHROME=/path/to/binary" >&2; exit 1; }
-SLIDES_DIR="$DIR/slides"
+SLIDES_DIR="${VIDEO_DIR:-$DIR}/slides"
 
 for f in "$SLIDES_DIR"/scene*.html; do
   name="$(basename "$f" .html)"

@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 # Full pipeline: HTML slides -> PNG screenshots -> TTS narration -> final MP4.
 #
-# Usage: ./build.sh [--skip-audio]
+# Usage: ./build.sh [--skip-audio] [DIR]   (e.g. ./build.sh leadership-team)
 #   --skip-audio   Reuse whatever's already in audio/ instead of regenerating
 #                   it (e.g. after running voice-clone/clone_voice.py).
 set -euo pipefail
 
 SKIP_AUDIO=0
+VIDEO_ARG=""
 for arg in "$@"; do
   case "$arg" in
     --skip-audio) SKIP_AUDIO=1 ;;
-    *) echo "Unknown argument: $arg" >&2; exit 1 ;;
+    -*) echo "Unknown argument: $arg" >&2; exit 1 ;;
+    *) VIDEO_ARG="$arg" ;;
   esac
 done
 
@@ -18,10 +20,19 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Use the repo venv (created by scripts/install-video-deps.sh) if present.
 [ -f "$DIR/../../.venv/bin/activate" ] && source "$DIR/../../.venv/bin/activate"
-SLIDES_DIR="$DIR/slides"
-AUDIO_DIR="$DIR/audio"
-SEGMENTS_DIR="$DIR/.segments"
-OUT="$DIR/obsidian-second-brain.mp4"
+# Optional DIR argument builds another video from DIR/scenes.json (output:
+# DIR/<dirname>.mp4). With no argument, builds the main walkthrough.
+if [ -n "$VIDEO_ARG" ]; then
+  WORK="$(cd "$VIDEO_ARG" && pwd)"
+  OUT="$WORK/$(basename "$WORK").mp4"
+else
+  WORK="$DIR"
+  OUT="$DIR/obsidian-second-brain.mp4"
+fi
+export VIDEO_DIR="$WORK"
+SLIDES_DIR="$WORK/slides"
+AUDIO_DIR="$WORK/audio"
+SEGMENTS_DIR="$WORK/.segments"
 PAD_SECONDS=0.6
 
 node "$DIR/render_slides.js"

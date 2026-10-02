@@ -15,15 +15,16 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Use the repo venv (created by scripts/install-video-deps.sh) if present.
 [ -f "$DIR/../../.venv/bin/activate" ] && source "$DIR/../../.venv/bin/activate"
-AUDIO_DIR="$DIR/audio"
+WORK="${VIDEO_DIR:-$DIR}"
+AUDIO_DIR="$WORK/audio"
 mkdir -p "$AUDIO_DIR"
 
 if [ "$ENGINE" = "kokoro" ]; then
-  python3 "$DIR/kokoro_tts.py" "$DIR/scenes.json" "$AUDIO_DIR" "${2:-af_heart}" "${3:-1.0}"
+  python3 "$DIR/kokoro_tts.py" "$WORK/scenes.json" "$AUDIO_DIR" "${2:-af_heart}" "${3:-1.0}"
   exit 0
 fi
 
-python3 - "$DIR/scenes.json" "$AUDIO_DIR" "$ENGINE" <<'PYEOF'
+python3 - "$WORK/scenes.json" "$AUDIO_DIR" "$ENGINE" <<'PYEOF'
 import json, subprocess, sys, os
 
 scenes_path, audio_dir, engine = sys.argv[1], sys.argv[2], sys.argv[3]

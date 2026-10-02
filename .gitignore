@@ -7,6 +7,9 @@ claude_desktop_config.json
 # Video build intermediates (kept out of git; final mp4 is committed separately)
 docs/video/slides/*.png
 docs/video/audio/*.wav
+docs/video/*/slides/
+docs/video/*/audio/
+docs/video/*/.segments/
 docs/video/.models/
 docs/video/.segments/
 
