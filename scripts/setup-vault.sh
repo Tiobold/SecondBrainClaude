@@ -23,6 +23,7 @@ FOLDERS=(
   "06-People"
   "$CONTEXT_DIR_NAME"
   "Daily"
+  "Weekly"
   "Templates"
 )
 

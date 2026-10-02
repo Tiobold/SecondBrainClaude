@@ -103,10 +103,11 @@ note in 00-Inbox" · "Search notes tagged project"
 
 ### Scene 10 — Claude Code skills
 **Slide:** bullets — meeting-prep, teams-meeting-notes · person-notes ·
-md-confluence, md-jira · weekly-slack-update
+md-confluence, md-jira · daily-sync, weekly-wrap-up (scheduled) ·
+weekly-slack-update
 
 **Narration:**
-> The repo also ships Claude Code skills. Meeting prep and Teams meeting notes turn your calendar into briefings and summaries. Person notes keeps one profile per colleague. Markdown to Confluence and Jira moves notes in and out of your tickets and pages. And the weekly Slack update drafts a summary for you to approve before anything is sent.
+> The repo also ships Claude Code skills. Meeting prep and Teams meeting notes turn your calendar into briefings and summaries. Person notes keeps one profile per colleague. Markdown to Confluence and Jira moves notes in and out of your tickets and pages. Daily sync and weekly wrap up are built to run on a schedule. And the weekly Slack update drafts a summary for you to approve before anything is sent.
 
 ---
 
@@ -134,7 +135,23 @@ md-confluence, md-jira · weekly-slack-update
 
 ---
 
-### Scene 14 — Suggested workflow
+### Scene 14 — On a schedule: the daily sync
+**Slide:** Scheduled-run simulation — banner: 18:00 weekdays, `claude -p "Run the daily-sync skill."` · Claude reads context, calendar, inbox · appends a `## Daily sync` section to today's daily note · reports nothing moved or deleted
+
+**Narration:**
+> Now the part that runs without you. At the end of each workday, a scheduler starts Claude with the daily sync skill. It reads your context, checks the calendar, counts what landed in the inbox, and appends a short section to today's note: what you captured, what happened, and what is open for tomorrow. It only appends. Nothing gets moved or deleted, and anything it could not reach is reported as skipped.
+
+---
+
+### Scene 15 — On a schedule: the weekly wrap-up
+**Slide:** Scheduled-run simulation — banner: 17:00 Fridays, `claude -p "Run the weekly-wrap-up skill."` · Claude reads the week's dailies, Decisions Log, Open Threads · creates `Weekly/2026-W40.md` with a Slack draft marked not sent
+
+**Narration:**
+> On Friday, the weekly wrap up skill reads the week's daily notes, decisions and open threads, and builds a weekly review note: what was completed, what stalled, and what to do next week. It also prepares a Slack update for your team. But it only saves it as a draft. Nothing is posted until you read it and say send.
+
+---
+
+### Scene 16 — Suggested workflow
 **Slide:** bullets — Capture fast into the inbox · Log session summaries in
 the daily note · Link related notes instead of repeating context
 
@@ -145,7 +162,7 @@ the daily note · Link related notes instead of repeating context
 
 ---
 
-### Scene 15 — Get started
+### Scene 17 — Get started
 **Slide:** "SecondBrainClaude" repo · README.md · scripts/setup-all.sh · templates/ · .claude/skills/
 
 **Narration:**

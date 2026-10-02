@@ -100,9 +100,10 @@
       "meeting-prep, teams-meeting-notes",
       "person-notes: one note per person",
       "md-confluence, md-jira",
+      "daily-sync, weekly-wrap-up: scheduled",
       "weekly-slack-update: draft, then approve"
     ],
-    "narration": "The repo also ships Claude Code skills. Meeting prep and Teams meeting notes turn your calendar into briefings and summaries. Person notes keeps one profile per colleague. Markdown to Confluence and Jira moves notes in and out of your tickets and pages. And the weekly Slack update drafts a summary for you to approve before anything is sent."
+    "narration": "The repo also ships Claude Code skills. Meeting prep and Teams meeting notes turn your calendar into briefings and summaries. Person notes keeps one profile per colleague. Markdown to Confluence and Jira moves notes in and out of your tickets and pages. Daily sync and weekly wrap up are built to run on a schedule. And the weekly Slack update drafts a summary for you to approve before anything is sent."
   },
   {
     "id": "scene11",
@@ -210,6 +211,92 @@
   },
   {
     "id": "scene14",
+    "kind": "chat",
+    "title": "On a schedule: the daily sync",
+    "chat": [
+      {
+        "role": "banner",
+        "when": "18:00 weekdays",
+        "text": "  claude -p \"Run the daily-sync skill.\""
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Read",
+            "target": "Meta/Claude Context/*.md"
+          },
+          {
+            "verb": "Read",
+            "target": "Calendar: today"
+          },
+          {
+            "verb": "Scan",
+            "target": "00-Inbox (3 new)"
+          },
+          {
+            "verb": "Edit",
+            "target": "Daily/2026-10-02.md"
+          }
+        ]
+      },
+      {
+        "role": "note",
+        "file": "Daily/2026-10-02.md",
+        "text": "## Daily sync\nCaptured: 3 new inbox notes, none filed yet.\nHappened: Atlas sync with [[Dana Reyes]]; cutover decision logged.\nTomorrow: 10:00 Atlas standup. Open loop: confirm backfill runtime."
+      },
+      {
+        "role": "claude",
+        "text": "Appended the daily sync to today's note. Nothing was moved or deleted. Skipped: chat and email, not connected."
+      }
+    ],
+    "narration": "Now the part that runs without you. At the end of each workday, a scheduler starts Claude with the daily sync skill. It reads your context, checks the calendar, counts what landed in the inbox, and appends a short section to today's note: what you captured, what happened, and what is open for tomorrow. It only appends. Nothing gets moved or deleted, and anything it could not reach is reported as skipped."
+  },
+  {
+    "id": "scene15",
+    "kind": "chat",
+    "title": "On a schedule: the weekly wrap-up",
+    "chat": [
+      {
+        "role": "banner",
+        "when": "17:00 Fridays",
+        "text": "  claude -p \"Run the weekly-wrap-up skill.\""
+      },
+      {
+        "role": "tools",
+        "items": [
+          {
+            "verb": "Read",
+            "target": "Daily/ (5 notes)"
+          },
+          {
+            "verb": "Read",
+            "target": "Decisions Log.md"
+          },
+          {
+            "verb": "Read",
+            "target": "Open Threads.md"
+          },
+          {
+            "verb": "Create",
+            "target": "Weekly/2026-W40.md"
+          }
+        ]
+      },
+      {
+        "role": "note",
+        "file": "Weekly/2026-W40.md",
+        "text": "Completed: Postgres chosen, cutover set for March 3.\nStalled: backfill job runtime.\nNext week: validate backfill, confirm cutover with Dana.\n## Slack draft for #team-atlas (not sent)"
+      },
+      {
+        "role": "claude",
+        "text": "Weekly review saved. The Slack draft is waiting for your approval. Nothing was posted."
+      }
+    ],
+    "narration": "On Friday, the weekly wrap up skill reads the week's daily notes, decisions and open threads, and builds a weekly review note: what was completed, what stalled, and what to do next week. It also prepares a Slack update for your team. But it only saves it as a draft. Nothing is posted until you read it and say send."
+  },
+  {
+    "id": "scene16",
     "kind": "bullets",
     "title": "Suggested workflow",
     "items": [
@@ -221,7 +308,7 @@
     "narration": "For day to day use: capture fast into the inbox, ask Claude to log session summaries into today's daily note, and link related notes instead of repeating context."
   },
   {
-    "id": "scene15",
+    "id": "scene17",
     "kind": "outro",
     "title": "Get started",
     "subtitle": "github.com/Tiobold/SecondBrainClaude",

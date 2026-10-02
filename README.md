@@ -102,6 +102,7 @@ SecondBrain/
 ├── 06-People/                   # One note per person (see person-notes skill)
 ├── Meta/Claude Context/         # Session-context layer (see claude-context skill) — path is configurable
 ├── Daily/                       # Daily notes (YYYY-MM-DD.md)
+├── Weekly/                      # Weekly review notes (YYYY-Www.md, see weekly-wrap-up skill)
 └── Templates/                   # Copied from this repo's templates/ folder
 ```
 
@@ -313,6 +314,8 @@ connected and authorized, and tells you what's missing instead of guessing.
 | `meeting-prep` | Before a meeting, pull related project/people/decision notes from the vault into a short briefing linked from today's daily note. | Google Calendar or Outlook/Microsoft 365 MCP server |
 | `teams-meeting-notes` | Find calendar events with Teams links, retrieve the transcript, archive it in `05-Meeting-Transcripts/`, and write a summary + action items. Proposes (never silently applies) related updates to project/decision-log notes. | Microsoft 365 MCP server (Outlook calendar + Teams transcripts) |
 | `person-notes` | Maintain one note per person in `06-People/`: profile + interaction timeline, built from vault mentions and optionally enriched from Slack/Telegram/WhatsApp/Email. | None for vault-only sync; chat/email MCP servers for the optional research mode |
+| `daily-sync` | End-of-day pass: appends a short "Daily sync" section to today's daily note (captured, happened, open for tomorrow), logs unrecorded decisions, flags unsorted inbox notes. Append-only, so it's safe to run unattended. | None; calendar/chat MCP servers optional |
+| `weekly-wrap-up` | Builds `Weekly/YYYY-Www.md` from the week's daily notes, decisions, and open threads, and prepares a Slack draft (never sends it). | None; Slack MCP server for the draft |
 | `claude-context` | Read `Meta/Claude Context/*.md` at the start of a session and route updates (decisions, priority shifts, open questions) to the right file at the end. See [section 5](#5-persistent-session-context). | None — pure vault read/write |
 
 `md-confluence`/`md-jira` keep a link back via frontmatter
@@ -323,15 +326,36 @@ field contract and formatting mapping. `teams-meeting-notes` and
 additions and show them before writing, never rewriting or removing what's
 there.
 
-**No skill runs on a background timer or file-watcher** — Claude Code
-skills only execute when invoked. `06-People/` notes stay current because
-`meeting-prep` and `teams-meeting-notes` call `person-notes`'s sync step
-for the people they touch as their last step, not because anything is
-watching the vault. Run `person-notes` directly (its whole-vault resync
-mode) to catch anything created before this was wired up, or by a note
-added outside those two skills. `claude-context` has the same limitation —
-see [section 5](#5-persistent-session-context) for how its session-start
-read actually gets triggered.
+**Skills don't run themselves.** A skill executes only when something invokes
+it. `06-People/` notes stay current because `meeting-prep` and
+`teams-meeting-notes` call `person-notes`'s sync step for the people they
+touch as their last step, not because anything is watching the vault. Run
+`person-notes` directly (its whole-vault resync mode) to catch anything
+created before this was wired up, or by a note added outside those two
+skills. `claude-context` has the same limitation, see
+[section 5](#5-persistent-session-context) for how its session-start read
+gets triggered.
+
+### Scheduled runs
+
+`daily-sync` and `weekly-wrap-up` are written to run unattended, which means
+something outside Claude has to start them. Any scheduler works: cron,
+launchd, or Task Scheduler running Claude Code in non-interactive mode from
+the vault folder, or a scheduled-task feature if your Claude client has one.
+For example, with cron (weekdays 18:00 for the daily sync, Fridays 17:00 for
+the weekly wrap-up):
+
+```cron
+0 18 * * 1-5  cd ~/ObsidianVaults/SecondBrain && claude -p "Run the daily-sync skill." --allowedTools "Read" "Edit" "Write"
+0 17 * * 5    cd ~/ObsidianVaults/SecondBrain && claude -p "Run the weekly-wrap-up skill." --allowedTools "Read" "Edit" "Write"
+```
+
+An unattended run can't answer permission prompts, so pre-approve only what
+it needs (and, if you use Option B, the `obsidian` MCP tools it should use);
+see the [Claude Code permissions docs](https://code.claude.com/docs). Both
+skills are append-only and `weekly-wrap-up` only ever *drafts* the Slack
+message, so the worst a misfire can do is add a section to a note. Test
+each one by running it by hand once before scheduling it.
 
 ---
 
@@ -382,6 +406,8 @@ read actually gets triggered.
 │   ├── meeting-prep/SKILL.md          # pre-meeting briefing from the vault
 │   ├── teams-meeting-notes/SKILL.md   # Teams transcripts -> summary + actions
 │   ├── person-notes/SKILL.md          # maintain 06-People/ profiles
+│   ├── daily-sync/SKILL.md            # scheduled end-of-day sync
+│   ├── weekly-wrap-up/SKILL.md        # scheduled weekly review + Slack draft
 │   └── claude-context/SKILL.md        # persistent session-context layer
 └── docs/
     ├── video-script.md                # narration script / storyboard

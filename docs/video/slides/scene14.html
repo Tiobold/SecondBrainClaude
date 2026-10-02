@@ -48,6 +48,9 @@
   .msg.user .who { color: #c9b6ef; }
   .msg.claude { align-self: flex-start; background: rgba(217,119,87,0.14); border: 1px solid #d97757; border-bottom-left-radius: 6px; }
   .msg.claude .who { color: #e8a58d; }
+  .banner { align-self: stretch; display: flex; align-items: center; gap: 18px; font-family: 'DejaVu Sans Mono', monospace; font-size: 26px;
+            color: #f1ecf7; background: linear-gradient(90deg, rgba(139,92,246,0.35), rgba(217,119,87,0.25)); border-radius: 14px; padding: 16px 28px; }
+  .banner .clock { font-weight: 700; color: #d97757; }
   .tools { align-self: flex-start; display: flex; flex-wrap: wrap; gap: 12px; }
   .tool { font-family: 'DejaVu Sans Mono', monospace; font-size: 23px; color: #b79bea; background: #1a1424;
           border: 1px solid #4b3a6b; border-radius: 999px; padding: 8px 20px; }
@@ -59,7 +62,10 @@
 </style></head><body>
     <div class="frame">
     <div class="badge"><span class="dot"></span>SecondBrainClaude</div>
-    <h1>Suggested workflow</h1>
-    <div class="content"><ul class="bullets"><li>Capture fast into the inbox</li><li>Log session summaries in the daily note</li><li>Link related notes instead of repeating context</li><li>Agree on a small, consistent tag vocabulary</li></ul></div>
+    <h1 style="font-size:56px;margin-bottom:6px;">On a schedule: the daily sync</h1>
+    <div class="content"><div class="chat"><div class="banner"><span class="clock">18:00 weekdays</span>  claude -p "Run the daily-sync skill."</div><div class="tools"><span class="tool"><b>Read</b>Meta/Claude Context/*.md</span><span class="tool"><b>Read</b>Calendar: today</span><span class="tool"><b>Scan</b>00-Inbox (3 new)</span><span class="tool"><b>Edit</b>Daily/2026-10-02.md</span></div><div class="notebox"><span class="file">Daily/2026-10-02.md</span>## Daily sync
+Captured: 3 new inbox notes, none filed yet.
+Happened: Atlas sync with [[Dana Reyes]]; cutover decision logged.
+Tomorrow: 10:00 Atlas standup. Open loop: confirm backfill runtime.</div><div class="msg claude"><div class="who">Claude</div>Appended the daily sync to today's note. Nothing was moved or deleted. Skipped: chat and email, not connected.</div></div></div>
     <div class="footer">Obsidian as a Second Brain for Claude — docs/video-script.md</div>
   </body></html>

@@ -68,6 +68,9 @@ const BASE_CSS = `
   .msg.user .who { color: #c9b6ef; }
   .msg.claude { align-self: flex-start; background: rgba(217,119,87,0.14); border: 1px solid #d97757; border-bottom-left-radius: 6px; }
   .msg.claude .who { color: #e8a58d; }
+  .banner { align-self: stretch; display: flex; align-items: center; gap: 18px; font-family: 'DejaVu Sans Mono', monospace; font-size: 26px;
+            color: #f1ecf7; background: linear-gradient(90deg, rgba(139,92,246,0.35), rgba(217,119,87,0.25)); border-radius: 14px; padding: 16px 28px; }
+  .banner .clock { font-weight: 700; color: #d97757; }
   .tools { align-self: flex-start; display: flex; flex-wrap: wrap; gap: 12px; }
   .tool { font-family: 'DejaVu Sans Mono', monospace; font-size: 23px; color: #b79bea; background: #1a1424;
           border: 1px solid #4b3a6b; border-radius: 999px; padding: 8px 20px; }
@@ -120,6 +123,7 @@ function renderScene(scene) {
       break;
     case "chat":
       body = `<div class="content"><div class="chat">${scene.chat.map(m => {
+        if (m.role === "banner") return `<div class="banner"><span class="clock">${esc(m.when)}</span>${esc(m.text)}</div>`;
         if (m.role === "tools") return `<div class="tools">${m.items.map(t => `<span class="tool"><b>${esc(t.verb)}</b>${esc(t.target)}</span>`).join("")}</div>`;
         if (m.role === "note") return `<div class="notebox"><span class="file">${esc(m.file)}</span>${esc(m.text)}</div>`;
         return `<div class="msg ${m.role}"><div class="who">${m.role === "user" ? "You" : "Claude"}</div>${esc(m.text)}</div>`;
