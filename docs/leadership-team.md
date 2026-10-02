@@ -102,8 +102,9 @@ in your denylist before the first draft.
 1. **Create the space and restrict it** to the four members in Confluence.
 2. Connect and authorize an Atlassian MCP server (and Slack, if you want
    the pointer message) in your Claude client.
-3. One person runs `lt-setup` in *create* mode; the others run it in
-   *join* mode. Each of you ends up with a personal `LT Config.md`. Review
+3. One person runs `lt-setup` in *create* mode; the others join by pasting
+   the prompt in [`leadership-onboarding-prompt.md`](leadership-onboarding-prompt.md)
+   (or running `lt-setup` in *join* mode). Each of you ends up with a personal `LT Config.md`. Review
    your allowlist and denylist line by line.
 4. Create a **private Slack channel containing exactly the four of you**
    and put its name in your config. `lt-brief` posts there only if it
