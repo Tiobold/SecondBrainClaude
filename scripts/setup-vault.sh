@@ -46,6 +46,21 @@ if [ -d "$TEMPLATES_DIR" ]; then
   done
 fi
 
+# Leadership second-brain templates (see docs/leadership-team.md). Kept in a
+# subfolder so they don't clutter the main template picker.
+if [ -d "$TEMPLATES_DIR/leadership" ]; then
+  mkdir -p "$VAULT_PATH/Templates/leadership"
+  for template in "$TEMPLATES_DIR"/leadership/*.md; do
+    dest="$VAULT_PATH/Templates/leadership/$(basename "$template")"
+    if [ -f "$dest" ]; then
+      echo "skip (exists) $dest"
+    else
+      cp "$template" "$dest"
+      echo "copied $dest"
+    fi
+  done
+fi
+
 # Seed the session-context layer (see .claude/skills/claude-context/SKILL.md)
 # with starter, empty-but-structured files - not copied into Templates/,
 # since these are living files, not reusable new-note templates.

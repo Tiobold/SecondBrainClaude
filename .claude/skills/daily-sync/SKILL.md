@@ -1,6 +1,6 @@
 ---
 name: daily-sync
-description: End-of-day sync of the vault: append a short "Daily sync" section to today's daily note (what was captured, what happened, what's open for tomorrow), route any unlogged decisions to the Decisions Log, and flag unsorted inbox notes. Designed to run unattended on a schedule, so it only ever appends. Use when asked to "run the daily sync", "wrap up today", or when invoked by a scheduler.
+description: End-of-day sync of the vault; append a short "Daily sync" section to today's daily note (what was captured, what happened, what's open for tomorrow), route any unlogged decisions to the Decisions Log, and flag unsorted inbox notes. Designed to run unattended on a schedule, so it only ever appends. Use when asked to "run the daily sync", "wrap up today", or when invoked by a scheduler.
 ---
 
 # Daily sync
@@ -55,6 +55,14 @@ from cron/launchd or a client's scheduled-task feature.
 3. Don't touch `About.md`, and don't rewrite `Current Focus.md` unattended:
    if priorities look like they shifted, put one line in the sync section
    ("Possible focus shift: ...") for the human to confirm.
+
+## Optional: leadership contribution
+
+If `Meta/Claude Context/LT Config.md` exists, finish by invoking the
+`lt-contribute` skill **in unattended mode**: it saves a draft under
+`## LT draft` in today's daily note and never publishes. Mention the draft
+in your final output so the user can review and approve it. Skip this step
+silently if the config doesn't exist.
 
 ## Guardrails
 

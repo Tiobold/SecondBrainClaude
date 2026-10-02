@@ -1,6 +1,6 @@
 ---
 name: weekly-wrap-up
-description: Friday wrap-up of the week: build the weekly review note from the week's daily notes, decisions, open threads, and project activity, and prepare (never send) a Slack draft via weekly-slack-update. Designed to run unattended on a schedule. Use when asked to "wrap up the week", "do the weekly review", or when invoked by a scheduler.
+description: Friday wrap-up of the week; build the weekly review note from the week's daily notes, decisions, open threads, and project activity, and prepare (never send) a Slack draft via weekly-slack-update. Designed to run unattended on a schedule. Use when asked to "wrap up the week", "do the weekly review", or when invoked by a scheduler.
 ---
 
 # Weekly wrap-up

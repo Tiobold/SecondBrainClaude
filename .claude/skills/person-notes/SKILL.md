@@ -1,6 +1,6 @@
 ---
 name: person-notes
-description: Maintain one note per person in 06-People/, built from mentions across the vault (meetings, transcripts, decisions, projects) and optionally enriched from connected Slack/Telegram/WhatsApp/Email MCPs. Use when asked to "update people notes", "who is X", "build a profile for X", "sync people", or as a follow-up step after processing meeting/transcript content that names attendees. Two modes: vault sync (default, safe, no external calls) and external research (explicit, requires a time range or all-time).
+description: Maintain one note per person in 06-People/, built from mentions across the vault (meetings, transcripts, decisions, projects) and optionally enriched from connected Slack/Telegram/WhatsApp/Email MCPs. Use when asked to "update people notes", "who is X", "build a profile for X", "sync people", or as a follow-up step after processing meeting/transcript content that names attendees. Two modes; vault sync (default, safe, no external calls) and external research (explicit, requires a time range or all-time).
 ---
 
 # Person notes

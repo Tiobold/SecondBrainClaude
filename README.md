@@ -6,6 +6,7 @@ Claude can read from and write to — so your notes, projects, and decisions
 carry across every conversation instead of living only in chat history.
 
 **Video walkthrough:** [`docs/video/obsidian-second-brain.mp4`](docs/video/obsidian-second-brain.mp4)
+**Leadership team variant:** [`docs/leadership-team.md`](docs/leadership-team.md)
 **Narration script / storyboard:** [`docs/video-script.md`](docs/video-script.md)
 **Rebuild the video:** `./scripts/install-video-deps.sh` once, then `docs/video/build.sh` (see [`docs/video-script.md`](docs/video-script.md#rebuilding-the-video)).
 **Want it narrated in your own voice?** [`docs/video/voice-clone/README.md`](docs/video/voice-clone/README.md)
@@ -316,6 +317,10 @@ connected and authorized, and tells you what's missing instead of guessing.
 | `person-notes` | Maintain one note per person in `06-People/`: profile + interaction timeline, built from vault mentions and optionally enriched from Slack/Telegram/WhatsApp/Email. | None for vault-only sync; chat/email MCP servers for the optional research mode |
 | `daily-sync` | End-of-day pass: appends a short "Daily sync" section to today's daily note (captured, happened, open for tomorrow), logs unrecorded decisions, flags unsorted inbox notes. Append-only, so it's safe to run unattended. | None; calendar/chat MCP servers optional |
 | `weekly-wrap-up` | Builds `Weekly/YYYY-Www.md` from the week's daily notes, decisions, and open threads, and prepares a Slack draft (never sends it). | None; Slack MCP server for the draft |
+| `lt-setup` | One-time setup of a shared leadership space in Confluence plus each member's `LT Config.md`. See [`docs/leadership-team.md`](docs/leadership-team.md). | Atlassian MCP server (Confluence) |
+| `lt-contribute` | Draft (and, after you approve, publish) your daily contribution to the leadership space, with a sensitivity screen. Draft-only when unattended. | Atlassian MCP server |
+| `lt-brief` | Daily/weekly leadership brief written from the shared space only; posts a pointer to a verified private Slack channel. | Atlassian MCP server; Slack optional |
+| `lt-context` | Load the leadership layer at session start; log decisions, asks, and risks as Confluence pages. | Atlassian MCP server |
 | `claude-context` | Read `Meta/Claude Context/*.md` at the start of a session and route updates (decisions, priority shifts, open questions) to the right file at the end. See [section 5](#5-persistent-session-context). | None — pure vault read/write |
 
 `md-confluence`/`md-jira` keep a link back via frontmatter
@@ -357,6 +362,15 @@ skills are append-only and `weekly-wrap-up` only ever *drafts* the Slack
 message, so the worst a misfire can do is add a section to a note. Test
 each one by running it by hand once before scheduling it.
 
+### Leadership second brain (team of leaders, Confluence)
+
+For a small leadership team that wants a shared layer on top of everyone's
+personal setup, see [`docs/leadership-team.md`](docs/leadership-team.md):
+each leader's own Claude publishes an approved daily distillation to a
+restricted Confluence space, and one scheduled run reads only that space to
+write a brief. Four skills (`lt-setup`, `lt-contribute`, `lt-brief`,
+`lt-context`) and the page templates in `templates/leadership/` implement it.
+
 ---
 
 ## 9. Troubleshooting
@@ -392,6 +406,7 @@ each one by running it by hand once before scheduling it.
 │   ├── weekly-review.md
 │   ├── decision-log.md
 │   ├── person.md
+│   ├── leadership/                    # Confluence page templates + LT Config
 │   ├── claude-context/                # starter files for Meta/Claude Context/
 │   │   ├── about.md
 │   │   ├── current-focus.md
@@ -407,6 +422,8 @@ each one by running it by hand once before scheduling it.
 │   ├── teams-meeting-notes/SKILL.md   # Teams transcripts -> summary + actions
 │   ├── person-notes/SKILL.md          # maintain 06-People/ profiles
 │   ├── daily-sync/SKILL.md            # scheduled end-of-day sync
+│   ├── lt-setup, lt-context,          # leadership second brain
+│   │   lt-contribute, lt-brief/
 │   ├── weekly-wrap-up/SKILL.md        # scheduled weekly review + Slack draft
 │   └── claude-context/SKILL.md        # persistent session-context layer
 └── docs/
